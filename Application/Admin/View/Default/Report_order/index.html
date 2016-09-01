@@ -1,0 +1,104 @@
+<div id="main-content">
+    <div class="main-title"><h2>订单统计</h2></div>
+    <div class="main-header">
+        <div class="row">
+        <div class="col-sm-4">
+            <ol class="breadcrumb">
+                <volist name="breadcrumbs" id="breadcrumb">
+                    <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                </volist>
+            </ol>
+        </div>
+        <div class="col-sm-8">
+            <div class="btn-group pull-right form-botton" role="group">
+
+
+                <a href="javascript:void(0)" onclick="download_excel('{$downloadUrl}');" class="btn btn-primary" role="button">
+                    <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span>导出
+                </a>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    </div>
+
+    <notempty name="error">
+        <div id="error" class="alert  alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>失败！</strong>{$error}
+        </div>
+    </notempty>
+    <notempty name="success">
+        <div id="success" class="alert  alert-success">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>成功！</strong>{$success}
+        </div>
+    </notempty>
+
+    <div class="admin_list" >
+        <div class="search-bar">
+            <form class="form-inline" role="form" method="get" action="{:U(ACTION_NAME)}">
+                <div class="form-group">
+                    <label for="start_date" class="control-label">开始日期：</label>
+                    <input type="text" class="form-control" id="start_date"
+                           name="start_date"
+                           value="{$search['start_date']}"
+                           placeholder="开始日期" />
+                </div>
+                <div class="form-group">
+                    <label for="end_date" class="control-label">结束日期：</label>
+                    <input type="text" class="form-control" id="end_date"
+                           name="end_date"
+                           value="{$search['end_date']}"
+                           placeholder="结束日期" />
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">筛选</button>
+
+                </div>
+            </form>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>总订单数</th>
+                    <th>总订单额</th>
+                    <th>支付单数</th>
+                    <th>支付额</th>
+                    <th>取消单数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <notempty name="lists">
+                <volist name="lists" id="list">
+                <tr>
+                    <td>{$list['setting_date']}</td>
+                    <td>{$list['all_rows']}</td>
+                    <td>{$list['all_total']}</td>
+                    <td>{$list['pay_rows']}</td>
+                    <td>{$list['pay_total']}</td>
+                    <td>{$list['back_rows']}</td>
+
+                </tr>
+                </volist>
+                <else />
+                     <tr><td colspan="10" style="color:red; text-align: center;">暂时无数据</td></tr>
+                 </notempty>
+                </tbody>
+            </table>
+        </div>
+        {$show}
+    </div>
+
+</div>
+
+<div id="dialog" title="">
+    <p></p>
+</div>
+<script language="javascript" type="text/javascript">
+    setDateRange($("#start_date"),$("#end_date"));
+</script>

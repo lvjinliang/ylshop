@@ -1,0 +1,33 @@
+{__NOLAYOUT__}
+<nav id="menu" class="navbar">
+    <div class="container">
+        <div class="navbar-header">
+            <span id="heading" class="visible-xs">分类</span>
+            <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-ex1-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav main-menu">
+                <li><a href="/">首页</a></li>
+                <volist name="data" id="menu">
+                    <li>
+                        <a href="{:U('Home/category/index',array('id'=>$menu['id']))}">{$menu['name']}</a>
+                        <notempty name="menu['children']">
+                            <ul class="sub-menu">
+                                <volist name="menu['children']" id="submenu">
+                                    <li >
+                                        <a href="{:U('Home/category/index',array('id'=>$submenu['id']))}">{$submenu['name']}</a>
+                                    </li>
+                                </volist>
+                            </ul>
+                        </notempty>
+                    </li>
+                </volist>
+
+
+            </ul>
+        </div>
+    </div>
+</nav>

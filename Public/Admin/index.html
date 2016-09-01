@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Bootstrap后台示例</title>
+   <meta name="viewport" content="width=device-width, 
+                                     initial-scale=1.0, 
+                                     maximum-scale=1.0, 
+                                     user-scalable=no">
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/jquery-ui.min.css" rel="stylesheet">
+    <link href="./css/main.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="./js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="./js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="./js/html5shiv.min.js"></script>
+      <script src="./js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div id="header">
+<nav class="navbar navbar-inverse ">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">logo</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li >
+		    <a href="javascript:void(0)" class="show_sidebar">
+		      <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>
+			</a>
+	    </li>
+        <li class="active"><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+   
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+</div>
+<div id="main">
+<div id="sidebar">
+    <ul class="menu">
+	    <li>
+	       <a href="javascript:void(0)">第一</a>
+	    </li>
+	    <li>
+	        <a href="javascript:void(0)">第二</a>
+		    <ul class="submenu">
+		        <li><a href="javascript:void(0)">第二1</a></li>
+				<li><a href="javascript:void(0)">第二2</a></li>
+				<li><a href="javascript:void(0)">第二3</a></li>
+		    </ul>
+	    </li>
+	    <li><a href="javascript:void(0)">第三</a></li>
+	    <li><a href="javascript:void(0)">第四</a></li>
+	    <li><a href="javascript:void(0)">第五</a></li>
+	</ul>
+</div>
+<div id="main-content">
+    <ol class="breadcrumb">
+	  <li><a href="#">Home</a></li>
+	  <li><a href="#">2013</a></li>
+	  <li class="active">十一月</li>
+	</ol>
+    <div class="admin_list" >
+	    <div class="search-bar">
+			<form class="form-inline" role="form">
+			   <div class="form-group">
+				  <label for="firstname" class="control-label">名字</label>
+				  
+					 <input type="text" class="form-control" id="firstname" 
+						placeholder="请输入名字">
+				  
+			   </div>
+			   <div class="form-group">
+				  <label for="lastname" class=" control-label">姓</label>			  
+					 <input type="text" class="form-control" id="lastname" 
+						placeholder="请输入姓">			
+			   </div>
+			   <div class="form-group">
+				 
+					 <div class="checkbox">
+						<label>
+						   <input type="checkbox"> 请记住我
+						</label>
+					 </div>
+				  
+			   </div>
+			   <div class="form-group">		  
+					 <button type="submit" class="btn btn-default">登录</button>
+				
+			   </div>
+			</form>
+		</div>
+		<div class="table-responsive">
+	    <table class="table table-bordered table-striped">
+		   <thead>
+			  <tr>
+				 <th>名称</th>
+				 <th>城市</th>
+				 <th>密码</th>
+				 <th>密码</th>
+				 <th>密码</th>
+				 <th>密码</th>
+				 <th>密码</th>
+				 <th>密码</th>
+				 
+			  </tr>
+		   </thead>
+		   <tbody>
+			  <tr>
+				 <td>Tanmay</td>
+				 <td>Bangalore</td>
+				 <td>560001</td>
+				 <td>560001</td>
+				 <td>560001</td>
+				 <td>560001</td>
+				 <td>560001</td>
+				 <td>560001</td>
+				
+			  </tr>
+			  <tr>
+				 <td>Sachin</td>
+				 <td>Mumbai</td>
+				 <td>400003</td>
+				 <td>400003</td>
+				 <td>400003</td>
+				 <td>400003</td>
+				 <td>400003</td>
+				 <td>400003</td>
+				 
+			  </tr>
+			  <tr>
+				 <td>Uma</td>
+				 <td>Pune</td>
+				 <td>411027</td>
+				 <td>411027</td>
+				 <td>411027</td>
+				 <td>411027</td>
+				 <td>411027</td>
+				 <td>411027</td>
+				 
+			  </tr>
+		   </tbody>
+		</table>
+		</div>
+		<div class="page">
+		  <ul class="pagination">
+			<li>
+			  <a href="#" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			  </a>
+			</li>
+			<li class="active"><a href="#">1</a></li>
+			<li><a href="#">2</a></li>
+			<li><a href="#">3</a></li>
+			<li><a href="#">4</a></li>
+			<li><a href="#">5</a></li>
+			<li>
+			  <a href="#" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			  </a>
+			</li>
+		  </ul>
+		</div>
+	</div>
+	
+	<div class="admin_form">
+		<form class="form-horizontal">
+		  <div class="form-group">
+			<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+			<div class="col-sm-10">
+			  <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+			</div>
+		  </div>
+		  <div class="form-group">
+			<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+			<div class="col-sm-10">
+			  <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+			  <span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+			</div>
+			
+		  </div>
+		  <div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+			  <div class="checkbox">
+				<label>
+				  <input type="checkbox"> Remember me
+				</label>
+			  </div>
+			</div>
+		  </div>
+		  <div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+			  <button type="submit" class="btn btn-default">Sign in</button>
+			</div>
+		  </div>
+		</form>
+		<div class="clear"></div>
+	</div>
+	
+</div>
+</div>
+<div id="footer">
+   <p>感谢使用雨良商务平台</p>
+</div>
+
+
+
+</body>
+<script src="./js/jquery-1.9.1.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
+<script src="./js/jquery-ui.min.js"></script>
+<script src="./js/main.js"></script>
+</html>

@@ -1,0 +1,102 @@
+<taglib name="Html" />
+<div id="main-content">
+
+    <div class="main-title"><h2>控制面板</h2></div>
+
+
+    <div class="admin_list" >
+
+        <div class="table-responsive">
+            <h4>站点统计</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>时间</th>
+                    <th>平台</th>
+                    <th>PV</th>
+                    <th>UV</th>
+                    <th>IPV</th>
+                </tr>
+                </thead>
+                <tbody>
+                <notempty name="data['countVisit']">
+                    <volist name="data['countVisit']" id="list">
+                        <tr>
+                            <td>{$list['date']}</td>
+                            <td>{$list['type']}</td>
+                            <td>{$list['pv']}</td>
+                            <td>{$list['uv']}</td>
+                            <td>{$list['ipv']}</td>
+
+                        </tr>
+                    </volist>
+                    <else />
+                    <tr><td colspan="10" style="color:red; text-align: center;">暂时无数据</td></tr>
+                </notempty>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive">
+            <h4>订单统计</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>总订单数</th>
+                    <th>总订单额</th>
+                    <th>支付单数</th>
+                    <th>支付额</th>
+                    <th>取消单数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <notempty name="data['order']">
+                    <volist name="data['order']" id="list">
+                        <tr>
+                            <td>{$list['setting_date']}</td>
+                            <td>{$list['all_rows']}</td>
+                            <td>{$list['all_total']}</td>
+                            <td>{$list['pay_rows']}</td>
+                            <td>{$list['pay_total']}</td>
+                            <td>{$list['back_rows']}</td>
+
+                        </tr>
+                    </volist>
+                    <else />
+                    <tr><td colspan="10" style="color:red; text-align: center;">暂时无数据</td></tr>
+                </notempty>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive">
+            <h4>用户统计</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>注册数</th>
+                    <th>激活数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <notempty name="data['account']">
+                    <volist name="data['account']" id="list">
+                        <tr>
+                            <td>{$list['setting_date']}</td>
+                            <td>{$list['all_rows']}</td>
+                            <td>{$list['all_rows']}</td>
+
+                        </tr>
+                    </volist>
+                    <else />
+                    <tr><td colspan="10" style="color:red; text-align: center;">暂时无数据</td></tr>
+                </notempty>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>

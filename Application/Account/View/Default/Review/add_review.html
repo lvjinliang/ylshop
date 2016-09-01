@@ -1,0 +1,90 @@
+<div id="page-content" class="account-add-review-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="sidebar" class="col-sm-3 ">
+                <div class="widget wid-categories">
+                    {:W('Account/common/menu')}
+                </div>
+            </div>
+
+            <div id="main-content" class="col-sm-9">
+                <div class="heading"><h2>订单评价</h2></div>
+
+                <notempty name="data['msg']">
+                    <notempty name="data['success']">
+                        <div id="success" class="alert  alert-success">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            <strong>{$data['msg']}</strong>
+                        </div>
+                    <else/>
+                        <div id="error" class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            <strong>{$data['msg']}</strong>
+                        </div>
+                    </notempty>
+
+                <else />
+                    <form name="theForm" class="form-horizontal" method="post" action="{:U('Account/review/add_review')}">
+                        <div class="form-group <notempty name="error['score']">has-error </notempty>">
+                            <label for="text" class="col-sm-3 control-label">请评分：</label>
+                            <div class="col-sm-9">
+                                <div class="start">
+                                    <span class="empty-start">
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                    </span>
+                                    <span class="solid-start">
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                    </span>
+                                </div>
+                                <input type="hidden" name="score" id ="score" value="{$data['score']}" autocomplete="off"/>
+                                <notempty name="error['score']">
+                                    <span class="help-block">{$error['score']}</span>
+                                </notempty>
+                            </div>
+                        </div>
+
+                        <div class="form-group <notempty name="error['content']">has-error </notempty>">
+                            <label for="content" class="col-sm-3 control-label">评价内容：</label>
+                            <div class="col-sm-9">
+                                <textarea rows="3" class="form-control"  name="content" id="content">{$data['content']}</textarea>
+                                <notempty name="error['content']">
+                                    <span class="help-block">{$error['content']}</span>
+                                </notempty>
+                            </div>
+                        </div>
+
+                        <input type="hidden" class="form-control" value="{$data['order_no']}" name="order_no"  />
+                        <input type="hidden" class="form-control" value="{$data['goods_id']}" name="goods_id"  />
+                        <input type="hidden" class="form-control" value="{$data['product_sn']}" name="product_sn"  />
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="submit" class="btn btn-1">保存</button>
+                            </div>
+                        </div>
+                    </form>
+                </notempty>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialog" title="">
+    <p></p>
+</div>

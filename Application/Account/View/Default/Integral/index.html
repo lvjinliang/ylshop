@@ -1,0 +1,81 @@
+<div id="page-content" class="account-integral-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="sidebar" class="col-sm-3 ">
+                <div class="widget wid-categories">
+                    {:W('Account/common/menu')}
+                </div>
+            </div>
+
+            <div id="main-content" class="col-sm-9">
+                <div class="heading">
+                    <eq name="data['typeId']" value="1">
+                        <h2>我的积分 <a href="{:U('Account/integral/index',array('type_id'=>2))}">使用积分</a></h2>
+                    <else />
+                        <h2><a href="{:U('Account/integral/index')}">我的积分</a> 使用积分</h2>
+                    </eq>
+                </div>
+                <div class="orders table-responsive">
+                    <notempty name="data['integralList']">
+                        <eq name="data['typeId']" value="1">
+                            <table class="table table-bordered ">
+                                <thead>
+                                <tr>
+                                    <th>获取日期</th>
+                                    <th>有效期</th>
+                                    <th>积分</th>
+                                    <th>已使用</th>
+                                    <th>说明</th>
+                                </tr>
+                                </thead>
+                                <volist name="data['integralList']" id="integral">
+                                    <tr>
+                                        <td>{:date('Y-m-d H:i:s',$integral['date_added'])}</td>
+                                        <td>{$integral['start_date']}至{$integral['end_date']}</td>
+                                        <td>{$integral['points']}</td>
+                                        <td>{$integral['used']}</td>
+                                        <td>{$integral['title']}</td>
+                                    </tr>
+
+                                </volist>
+                            </table>
+                        <else/>
+                            <table class="table table-bordered ">
+                                <thead>
+                                <tr>
+                                    <th>使用日期</th>
+                                    <th>积分</th>
+                                    <th>说明</th>
+                                </tr>
+                                </thead>
+                                <volist name="data['integralList']" id="integral">
+                                    <tr>
+                                        <td>{:date('Y-m-d H:i:s',$integral['date_added'])}</td>
+                                        <td>{$integral['points']}</td>
+                                        <td>{$integral['title']}</td>
+                                    </tr>
+
+                                </volist>
+                            </table>
+                        </eq>
+                    </notempty>
+                </div>
+                <div class="row text-center">
+                    {$data['show']}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialog" title="">
+    <p></p>
+</div>

@@ -1,0 +1,118 @@
+<div id="main-content">
+    <div class="main-title"><h2><empty name="data['id']">添加<else />编辑</empty>评价</h2></div>
+    <div class="main-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <ol class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ol>
+            </div>
+            <div class="col-sm-4">
+                <div class="btn-group pull-right form-botton" role="group">
+                    <a href="{$redirect}" class="btn btn-primary" role="button">
+                        返回
+                    </a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <notempty name="errorInfo">
+        <div id="erroInfo" class="alert  alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>失败！</strong>{$errorInfo}
+        </div>
+    </notempty>
+
+    <div class="admin_form">
+        <form class="form-horizontal" action="" id="theForm" method="post">
+            <div class="form-group">
+                <label for="order_no" class="col-sm-2 control-label">订单号：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="order_no" class="form-control" name="order_no" placeholder="订单号" value="{$data['order_no']}" readonly="true" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">评价者：</label>
+                <div class="col-sm-10">
+                    <input type="text" value="{$data['username']}" class="form-control"  readonly="true" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">商品：</label>
+                <div class="col-sm-10">
+                    <input type="text" value="{$data['name']} {$data['goods_attr']}" class="form-control"  readonly="true" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">商品货号：</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control"  value="{$data['goods_sn']}<notempty name="data['product_sn']">-{$data['product_sn']}</notempty>" readonly="true" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="is_top" class="col-sm-2 control-label">是否置顶：</label>
+                <div class="col-sm-10">
+                    <select id="is_top" class="form-control" name="is_top" >
+                        <option value="1" <eq name="data['is_top']" value="1">selected="selected"</eq>>是</option>
+                        <option value="0" <eq name="data['is_top']" value="0">selected="selected"</eq>>否</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="status" class="col-sm-2 control-label">状态：</label>
+                <div class="col-sm-10">
+                    <select id="status" class="form-control" name="status" >
+                        <option value="0" <eq name="data['status']" value="0">selected="selected"</eq>>末审核</option>
+                        <option value="1" <eq name="data['status']" value="1">selected="selected"</eq>>审核通过</option>
+                        <option value="2" <eq name="data['status']" value="2">selected="selected"</eq>>审核末通过</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">评分：</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control"  value="{$data['score']}" readonly="true" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">评价内容：</label>
+                <div class="col-sm-10">
+                    <textarea id="content" class="form-control" rows="3">{$data['content']}</textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">回复：</label>
+                <div class="col-sm-10">
+                    <textarea id="reply_content" name="reply_content" class="form-control" rows="3">{$data['reply_content']}</textarea>
+                </div>
+            </div>
+
+
+
+            <notempty name="data['id']">
+                <input type="hidden" name="id" value="{$data['id']}" />
+            </notempty>
+            <notempty name="redirect">
+                <input type="hidden" name="redirect" value="{$redirect}" />
+            </notempty>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" value="提交" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+
+</div>

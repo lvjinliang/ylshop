@@ -1,0 +1,22 @@
+<div id="page-content" class="checkout-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <input type="hidden" name="get_content_url" value="{:U('Home/checkout/ajax_get_content')}" />
+        <input type="hidden" name="get_order_url" value="{:U('Home/checkout/order')}" />
+        <input type="hidden" name="get_success_url" value="{:U('Home/checkout/success')}" />
+        <div class="checkout-content">
+        {$data['checkout-content']}
+        </div>
+    </div>
+</div>
+<div id="dialog" title="">
+    <div class="container-fluid"></div>
+</div>

@@ -1,0 +1,139 @@
+<div id="main-content">
+    <div class="main-title">
+        <h2><empty name="data['id']">添加<else />编辑</empty>商品属性</h2>
+    </div>
+    <div class="main-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <ol class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ol>
+            </div>
+            <div class="col-sm-4">
+                <div class="btn-group pull-right form-botton" role="group">
+                    <a href="{$redirect}" class="btn btn-primary" role="button">
+                        返回
+                    </a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <notempty name="errorInfo">
+        <div id="erroInfo" class="alert  alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>失败！</strong>{$errorInfo}
+        </div>
+    </notempty>
+
+    <div class="admin_form">
+        <form class="form-horizontal" action="" id="theForm" method="post">
+            <div class="form-group <notempty name="error['name']">has-error </notempty>">
+                <label for="name" class="col-sm-2 control-label">属性名：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="name" class="form-control" name="name" placeholder="属性名" value="{$data['name']}" />
+                    <notempty name="error['name']">
+                        <span class="help-block">{$error['name']}</span>
+                    </notempty>
+                </div>
+            </div>
+
+            <div class="form-group <notempty name="error['type_id']">has-error </notempty>">
+                <label for="type_id" class="col-sm-2 control-label">商品类型：</label>
+                <div class="col-sm-10">
+                    <select id="type_id" class="form-control" name="type_id" >
+                        <option value="">--请选择--</option>
+                        <volist name="goodsTypes" id="goodType">
+                            <option value="{$goodType['id']}" <eq name="goodType['id']" value="$data['type_id']">selected="selected"</eq>>{$goodType['name']}</option>
+                        </volist>
+                    </select>
+                    <notempty name="error['type_id']">
+                        <span class="help-block">{$error['type_id']}</span>
+                    </notempty>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="type" class="col-sm-2 control-label">属性是否可选：</label>
+                <div class="col-sm-10">
+                    <select id="type" class="form-control" name="type" >
+                        <option value="1" <eq name="data['type']" value="1">selected="selected"</eq>>唯一属性</option>
+                        <option value="2" <eq name="data['type']" value="2">selected="selected"</eq>>可选属性</option>
+                    </select>
+                    <span class="help-block">可选属性可以对商品该属性设置多个值，同时还能对不同属性值指定不同的价格加价;唯一属性是商品的该属性值只能设置一个值，用户只能查看该值。</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="index" class="col-sm-2 control-label">能否进行检索</label>
+                <div class="col-sm-10">
+                    <select id="index" class="form-control" name="index">
+                        <option value="1" <eq name="data['index']" value="1">selected="selected"</eq>>不需要检索</option>
+                        <option value="2" <eq name="data['index']" value="2">selected="selected"</eq>>关键字检索 </option>
+                        <option value="3" <eq name="data['index']" value="3">selected="selected"</eq>>范围检索 </option>
+
+                    </select>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+
+<div class="form-group">
+                <label for="input_type" class="col-sm-2 control-label">该属性值的录入方式</label>
+                <div class="col-sm-10">
+                    <select id="input_type" class="form-control" name="input_type" >
+                        <option value="1" <eq name="data['input_type']" value="1">selected="selected"</eq>>手工录入</option>
+                        <option value="2" <eq name="data['input_type']" value="2">selected="selected"</eq>>从下面的列表中选择</option>
+
+                    </select>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div class="form-group ">
+                <label for="values" class="col-sm-2 control-label">可选值列表：</label>
+                <div class="col-sm-10">
+                    <textarea id="values" <eq name="data['input_type']" value="1">disabled="true"</eq>  name="values" class="form-control" rows="3">{$data['values']}</textarea>
+                    <span class="help-block">（一行代表一个可选值）</span>
+                </div>
+            </div>
+
+
+            <div class="form-group <notempty name="error['sort']">has-error </notempty>">
+                <label for="sort" class="col-sm-2 control-label">排序：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="sort" class="form-control" name="sort"  value="{$data['sort']}"  placeholder="排序">
+                    <notempty name="error['sort']">
+                        <span class="help-block">{$error['sort']}</span>
+                    </notempty>
+                </div>
+            </div>
+
+            <notempty name="data['id']">
+                <input type="hidden" name="id" value="{$data['id']}" />
+            </notempty>
+            <notempty name="redirect">
+                <input type="hidden" name="redirect" value="{$redirect}" />
+            </notempty>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" value="提交" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+
+</div>
+<script type="application/javascript" language="javascript">
+   $("select[name='input_type']").change(function(){
+       if($(this).val() == 1) {
+           $("textarea[name='values']").attr("disabled", true);
+       } else {
+           $("textarea[name='values']").attr("disabled", false);
+       }
+   });
+</script>

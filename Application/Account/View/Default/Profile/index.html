@@ -1,0 +1,108 @@
+<div id="page-content" class="account-profile-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="sidebar" class="col-sm-3 ">
+                <div class="widget wid-categories">
+                    {:W('Account/common/menu')}
+                </div>
+            </div>
+
+            <div id="main-content" class="col-sm-9">
+                <div class="heading"><h2>用户信息</h2></div>
+                <notempty name="success">
+                    <div id="success" class="alert  alert-success">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        <strong>{$success}</strong>
+                    </div>
+                </notempty>
+                <form name="theForm" class="form-horizontal" method="post" action="{:U('Account/profile/index')}">
+                    <div class="form-group <notempty name="error['username']">has-error </notempty>">
+                        <label for="username" class="col-sm-3 control-label">用户名：</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="用户名" name="username" id="username" value="{$data['username']}" />
+                            <notempty name="error['username']">
+                                <span class="help-block">{$error['username']}</span>
+                            </notempty>
+                        </div>
+                    </div>
+
+                    <div class="form-group <notempty name="error['email']">has-error </notempty>">
+                        <label for="email" class="col-sm-3 control-label">邮箱：</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="邮箱" name="email" id="email" value="{$data['email']}" />
+                            <notempty name="error['email']">
+                                <span class="help-block">{$error['email']}</span>
+                            </notempty>
+                        </div>
+                    </div>
+
+                    <div class="form-group <notempty name="error['telephone']">has-error </notempty>">
+                        <label for="telephone" class="col-sm-3 control-label">手机：</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="手机" name="telephone" id="telephone" value="{$data['telephone']}" />
+                            <notempty name="error['telephone']">
+                                <span class="help-block">{$error['telephone']}</span>
+                            </notempty>
+                        </div>
+                    </div>
+
+                    <div class="form-group <notempty name="error['home_phone']">has-error </notempty>">
+                        <label for="home_phone" class="col-sm-3 control-label">家庭电话：</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="家庭电话" name="home_phone" id="home_phone" value="{$data['home_phone']}" />
+                            <notempty name="error['home_phone']">
+                                <span class="help-block">{$error['home_phone']}</span>
+                            </notempty>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">姓：</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="姓" name="firstname" id="firstname" value="{$data['firstname']}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-3 control-label">名：</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="名" name="lastname" id="lastname" value="{$data['lastname']}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sex" class="col-sm-3 control-label">性别：</label>
+                        <div class="col-sm-9">
+                            <select name="sex" id="sex" >
+                                <option value="1" <eq name="data['sex']" value="1">selected="true"</eq>>男</option>
+                                <option value="2" <eq name="data['sex']" value="2">selected="true"</eq>>女</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <input type="hidden" class="form-control" value="{$data['id']}" name="id" id="id" />
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-1">保存</button>
+                        </div>
+                    </div>
+                 </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="dialog" title="">
+    <p></p>
+</div>

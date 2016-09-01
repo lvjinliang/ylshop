@@ -1,0 +1,100 @@
+<taglib name="Html" />
+<div id="main-content">
+    <div class="main-title">
+        <h2><empty name="data['id']">添加<else />编辑</empty>品牌</h2>
+    </div>
+    <div class="main-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <ol class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ol>
+            </div>
+            <div class="col-sm-4">
+                <div class="btn-group pull-right form-botton" role="group">
+                    <a href="{$redirect}" class="btn btn-primary" role="button">
+                        返回
+                    </a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <notempty name="errorInfo">
+        <div id="erroInfo" class="alert  alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>失败！</strong>{$errorInfo}
+        </div>
+    </notempty>
+
+    <div class="admin_form">
+        <form class="form-horizontal" action="" id="theForm" method="post">
+            <div class="form-group <notempty name="error['name']">has-error </notempty>">
+                <label for="name" class="col-sm-2 control-label">链接名：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="name" class="form-control" name="name" placeholder="品牌名" value="{$data['name']}" />
+                    <notempty name="error['name']">
+                        <span class="help-block">{$error['name']}</span>
+                    </notempty>
+                </div>
+            </div>
+
+            <div class="form-group <notempty name="error['url']">has-error </notempty>">
+                <label for="url" class="col-sm-2 control-label">链接地址：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="url" class="form-control" name="url" placeholder="链接地址" value="{$data['url']}" />
+                    <notempty name="error['name']">
+                        <span class="help-block">{$error['url']}</span>
+                    </notempty>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="logo" class="col-sm-2 control-label">品牌logo</label>
+                <div class="col-sm-10">
+                    <!-- 加载编辑器的容器 -->
+                    <Html:imageUpload name="brand_logo" id="logo" src="{$data['logo']}" />
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div class="form-group <notempty name="error['sort']">has-error </notempty>">
+                <label for="sort" class="col-sm-2 control-label">排序：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="sort" class="form-control" name="sort"  value="{$data['sort']}"  placeholder="排序">
+                    <notempty name="error['sort']">
+                        <span class="help-block">{$error['sort']}</span>
+                    </notempty>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="status" class="col-sm-2 control-label">状态：</label>
+                <div class="col-sm-10">
+                    <select id="status" class="form-control" name="status" >
+                        <option value="1" <eq name="data['status']" value="1">selected="selected"</eq>>开启</option>
+                        <option value="0" <eq name="data['status']" value="0">selected="selected"</eq>>关闭</option>
+                    </select>
+                </div>
+            </div>
+
+            <notempty name="data['id']">
+                <input type="hidden" name="id" value="{$data['id']}" />
+            </notempty>
+            <notempty name="redirect">
+                <input type="hidden" name="redirect" value="{$redirect}" />
+            </notempty>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" value="提交" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+
+</div>

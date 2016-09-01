@@ -1,0 +1,124 @@
+<div id="page-content" class="account-order-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="sidebar" class="col-sm-3 ">
+                <div class="widget wid-categories">
+                    {:W('Account/common/menu')}
+                </div>
+            </div>
+
+            <div id="main-content" class="col-sm-9">
+                <div class="heading"><h2>我的订单</h2></div>
+                <div class="orders table-responsive">
+                    <notempty name="data['orders']">
+                        <table class="table table-bordered ">
+                            <thead>
+                            <tr>
+                                <th>商品</th>
+                                <th>单价</th>
+                                <th>数量</th>
+                                <th>实付款</th>
+                                <th>交易状态</th>
+                                <th>交易操作</th>
+                            </tr>
+                            </thead>
+                            <volist name="data['orders']" id="order">
+                                <tr>
+                                    <td colspan="6" class="order-title">
+                                        <span class="pull-left">下单时间：{:date('Y-m-d',$order['date_added'])}</span>
+                                        <span class="pull-right">订单号：{$order['order_no']}</span>
+                                    </td>
+                                </tr>
+                                <volist name="order['goods']" key="i" id="goods">
+                                <tr>
+                                    <td>
+                                        <a href="{:U('Home/goods/index',array('id'=>$goods['goods_id']))}">
+                                            {$goods['name']}{$goods['goods_attr']}
+                                        </a><br/>
+                                        <a href="{:U('Home/goods/index',array('id'=>$goods['goods_id']))}">
+                                            <img class="order-img" src="{$goods['thumb']}" />
+                                        </a>
+                                    </td>
+                                    <td class="product">
+                                        <div class="price">
+                                            {$goods['price']}
+                                            <neq name="goods['or_price']" value="0">
+                                                <span>{$goods['or_price']}</span>
+                                            </neq>
+                                        </div>
+                                    </td>
+                                    <td>{$goods['number']}</td>
+                                    <eq name="i" value="1">
+                                        <td rowspan="{:count($order['goods'])}">
+                                            商品总额：{$order['goods_total']}
+                                            <if condition="$order['shipping'] neq 0">
+                                                <br/>含运费：{$order['shipping']}
+                                            </if>
+                                            <if condition="$order['sales_promotion'] neq 0">
+                                                <br/>促销额：{$order['sales_promotion']}
+                                            </if>
+                                            <if condition="$order['coupon'] neq 0">
+                                                <br/>优惠券：{$order['coupon']}
+                                            </if>
+                                            <if condition="$order['integral'] neq 0">
+                                                <br/>使用积分：{$order['integral']}
+                                            </if>
+                                            <if condition="$order['money'] neq 0">
+                                                <br/>使用余额：{$order['money']}
+                                            </if>
+                                            <if condition="$order['update_total'] neq 0">
+                                                <br/>调整金额：{$order['update_total']}
+                                            </if>
+                                            <br/> <span style="color:red;">实付款：{$order['total']}</span>
+                                        </td>
+                                    </eq>
+                                    <eq name="i" value="1">
+                                        <td rowspan="{:count($order['goods'])}">
+                                        {$order['order_status']}<br/>
+                                        {$order['payment_status']}
+                                         </td>
+                                    </eq>
+                                    <eq name="i" value="1">
+                                        <td rowspan="{:count($order['goods'])}">
+                                            <a href="{:U('account/order/detail',array('id'=> $order['order_no']))}">订单详情</a><br/>
+                                            <if condition="($order['payment_status_id'] neq 1) AND in_array($order['order_status_id'],array(1,2))">
+                                                <a href="{:U('home/checkout/success',array('id'=> $order['order_no']))}">立即支付</a><br/>
+                                            </if>
+                                            <if condition="in_array($order['order_status_id'],array(1,2))">
+                                             <a class="cancel_order" href="{:U('account/order/ajax_cancel_order',array('id'=>$order['order_no']))}">取消订单</a><br/>
+                                            </if>
+                                            <if condition="$order['order_status_id'] eq 3">
+                                                <a class="confirm_order" href="{:U('account/order/ajax_confirm_order',array('id'=>$order['order_no']))}">确认收货</a><br/>
+                                            </if>
+                                            <if condition="$order['isCanReturn'] eq 1">
+                                                <a class="return_order" href="{:U('account/order/ajax_return_order',array('id'=>$order['order_no']))}">申请退货</a><br/>
+                                            </if>
+
+
+                                        </td>
+                                    </eq>
+                                </tr>
+                                </volist>
+                            </volist>
+                        </table>
+                    </notempty>
+                </div>
+                <div class="row text-center">
+                    {$data['show']}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialog" title="">
+    <div></div>
+</div>

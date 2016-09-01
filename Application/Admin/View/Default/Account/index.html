@@ -1,0 +1,65 @@
+<div id="main-content">
+    <div class="main-title"><h2>会员管理</h2></div>
+    <div class="main-header">
+        <div class="row">
+        <div class="col-sm-4">
+            <ol class="breadcrumb">
+                <volist name="breadcrumbs" id="breadcrumb">
+                    <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                </volist>
+            </ol>
+        </div>
+        <div class="col-sm-8">
+            <!-- <div class="btn-group pull-right form-botton" role="group">
+                 <a href="{:U('account/add')}" class="btn btn-primary" role="button">
+                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
+                 </a>
+
+                 <a href="javascript:void(0)" onclick="deleteSelect('{:U('account/delete')}')" class="btn btn-primary" role="button">
+                     <span class="glyphicon glyphicon-trash" aria-hidden="true"> </span>删除选中
+                 </a>
+             </div>-->
+        </div>
+        <div class="clear"></div>
+    </div>
+    </div>
+
+    <notempty name="error">
+        <div id="error" class="alert  alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>失败！</strong>{$error}
+        </div>
+    </notempty>
+    <notempty name="success">
+        <div id="success" class="alert  alert-success">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>成功！</strong>{$success}
+        </div>
+    </notempty>
+
+    <div class="admin_list" >
+        {$content}
+    </div>
+</div>
+
+<div id="dialog" title="">
+    <p></p>
+</div>
+<script type="text/javascript" language="javascript">
+    $("body").on("click", "a.set-value", function(e){
+        e.preventDefault();
+        var url = $(this).attr("href");
+        _this = $(this);
+        $.ajax({
+            type : 'GET',
+            url : url,
+            dataType : 'json',
+            success : function (json){
+                if (json.success==1) {
+                    _this.html(json.text);
+                    _this.attr('href',json.href);
+                }
+            }
+        })
+    });
+</script>

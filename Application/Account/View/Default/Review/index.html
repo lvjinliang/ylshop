@@ -1,0 +1,70 @@
+<div id="page-content" class="account-review-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="sidebar" class="col-sm-3 ">
+                <div class="widget wid-categories">
+                    {:W('Account/common/menu')}
+                </div>
+            </div>
+
+            <div id="main-content" class="col-sm-9">
+                <div class="heading"><h2>待评价 <a href="{:U('account/review/had_review')}">已评价</a></h2></div>
+                <div class="orders table-responsive">
+                    <notempty name="data['reviewList']">
+                        <table class="table table-bordered ">
+                            <volist name="data['reviewList']" id="order">
+                                <tr>
+                                    <td colspan="6" class="order-title">
+                                        <span class="pull-left">下单时间：{:date('Y-m-d',$order['date_added'])}</span>
+                                        <span class="pull-right">订单号：{$order['order_no']}</span>
+                                    </td>
+                                </tr>
+                                <volist name="order['goods']" key="i" id="goods">
+                                    <tr>
+                                        <td>
+                                            <a href="{:U('Home/goods/index',array('id'=>$goods['goods_id']))}">
+                                                {$goods['name']}{$goods['goods_attr']}
+                                            </a><br/>
+                                            <a href="{:U('Home/goods/index',array('id'=>$goods['goods_id']))}">
+                                                <img class="order-img" src="{$goods['thumb']}" />
+                                            </a>
+                                        </td>
+                                        <td class="product">
+                                            <div class="price">
+                                              {$goods['price']}
+                                              <neq name="goods['or_price']" value="0">
+                                                  <span>{$goods['or_price']}</span>
+                                              </neq>
+                                            </div>
+                                        </td>
+                                        <td>{$goods['number']}</td>
+                                        <td>
+                                            <a href="{:U('Account/review/add_review', array('order_no'=>$order['order_no'],'goods_id'=>$goods['goods_id'],'product_sn'=>$goods['product_sn']))}">
+                                                立即评价
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </volist>
+                            </volist>
+                        </table>
+                    </notempty>
+                </div>
+                <div class="row text-center">
+                    {$data['show']}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialog" title="">
+    <p></p>
+</div>

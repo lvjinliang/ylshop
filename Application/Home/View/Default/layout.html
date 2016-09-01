@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>{$seoTitle}</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="{$seoDescription}">
+    <meta name="keywords" content="{$seoKeywords}">
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/jquery-ui.min.css" type="text/css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/style.css">
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="__PUBLIC__/Home/font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/fonts/font-slider.css" type="text/css">
+    <volist name="styles" id="style">
+        <link rel="stylesheet" href="{$style['href']}" type="text/css">
+    </volist>
+    <!-- jQuery and Modernizr-->
+    <script src="__PUBLIC__/Home/js/jquery-1.9.1.min.js"></script>
+    <!-- Core JavaScript Files -->
+    <script src="__PUBLIC__/Home/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/Home/js/jquery-ui.min.js"></script>
+    <eq name="showMenu" value="1">
+    <script src="__PUBLIC__/Home/js/stickUp.min.js"></script>
+    </eq>
+    <script src="__PUBLIC__/Home/js/jquery.fly.min.js"></script>
+    <volist name="scripts" id="script">
+        <script type="text/javascript" language="javascript" src="{$script['src']}" ></script>
+    </volist>
+    <script src="__PUBLIC__/Home/js/main.js"></script>
+    <!--[if lt IE 9]>
+    <script src="__PUBLIC__/Home/js/html5shiv.js"></script>
+    <script src="__PUBLIC__/Home/js/respond.min.js"></script>
+    <![endif]-->
+    <!--[if lte IE 9]>
+    <script src="__PUBLIC__/Home/js/requestAnimationFrame.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+<!--Top-->
+    <nav id="top">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <ul class="top-link">
+                        <notempty name="Think.session.account.id">
+                        <li><a href="{:U('Account/index/index')}"><span class="glyphicon glyphicon-user"></span> 用户中心</a></li>
+                        <li><a href="{:U('Home/login/logout')}"><span class="glyphicon glyphicon glyphicon-log-out"></span> 退出</a></li>
+                        <else />
+                        <li><a href="{:U('Home/login/index')}"><span class="glyphicon glyphicon glyphicon-log-in"></span> 登录</a></li>
+                        <li><a href="{:U('Home/register/index')}"><span class="glyphicon glyphicon glyphicon-registration-mark"></span> 注册</a></li>
+                        </notempty>
+                        <li><a href="#"><span class="glyphicon glyphicon-envelope"></span> 联系我们</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!--Header-->
+    <header class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                <div id="logo"><a href="/"><img src="__PUBLIC__/Home/images/logo.png"/></a></div>
+            </div>
+            <div class="col-xs-9 col-sm-6">
+                <form class="form-search">
+                    <input type="text" class="search-input input-medium search-query" value="{$searchKey}">
+                    <button type="button" class="search-btn btn" data="{:U('search/index')}"><span class="glyphicon glyphicon-search"></span></button>
+                </form>
+            </div>
+            <div class="col-xs-3 col-sm-2">
+                <eq name="showMenu" value="1">
+                <div id="cart">
+                    <a class="btn btn-1 cart" href="{:U('Home/cart/index')}">
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                        <span class="cart-number">{:W('Home/Common/init_cart')}<span>
+                    </a>
+                </div>
+                </eq>
+            </div>
+        </div>
+    </header>
+    <!--Navigation-->
+    <eq name="showMenu" value="1">
+    {:W('Home/Common/Menu')}
+    </eq>
+    {__CONTENT__}
+    <footer>
+        <eq name="showMenu" value="1">
+        <div class="container">
+            <div class="wrap-footer">
+                <div class="row">
+                    <div class="col-md-4 col-footer footer-1">
+                        <img src="__PUBLIC__/Home/images/logofooter.png"/>
+
+                        <p>我们愿与更多中小企业一起努力，一起成功!</p>
+                    </div>
+                    <div class="col-md-4 col-footer footer-2">
+                        <div class="heading"><h4>关于我们</h4></div>
+                        <ul>
+                            <li><a href="#">关于我们</a></li>
+                            <li><a href="#">使用说明</a></li>
+                            <li><a href="#">注删协议</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-4 col-footer footer-4">
+                        <div class="heading"><h4>联系我们</h4></div>
+                        <ul>
+                            <li><span class="glyphicon glyphicon-home"></span>上海市徐汇区宝石园20栋18楼</li>
+                            <li><span class="glyphicon glyphicon-earphone"></span>186****8692</li>
+                            <li><span class="glyphicon glyphicon-envelope"></span>411481190@qq.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </eq>
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        Copyright &copy; 2015.Company name All rights reserved.
+                    </div>
+                    <div class="col-md-6">
+                        <div class="pull-right">
+                            <ul>
+                                <li></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    {:W('Home/Common/bi')}
+</body>
+
+</html>

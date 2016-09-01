@@ -1,0 +1,64 @@
+<div id="main-content">
+    <div class="main-title">
+        <h2>生成搜索词</h2>
+    </div>
+    <div class="main-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <ol class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ol>
+            </div>
+            <div class="col-sm-4">
+
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+
+    <div class="admin_form">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <textarea id="content" name="content" class="form-control" rows="8"></textarea>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div style="margin: 10px;"></div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input type="submit" data="{:U('search/ajax_create_keys')}" value="生成" class="btn btn-primary create">
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+</div>
+<script>
+    $(function(){
+         $("body").on("click", "input.create", function (){
+             var url = $(this).attr("data");
+             createKeys(url,1);
+         });
+
+    });
+
+    function createKeys(url, $key) {
+        $.ajax({
+            url : url+'/p/'+$key,
+            type : 'GET',
+            dateType : 'json',
+            success : function (json){
+                if (json.success==1) {
+                    $("#content").append(json.msg);
+                    createKeys(url,json.p);
+                } else {
+                    $("#content").append(json.msg);
+                }
+
+            }
+        });
+    }
+</script>

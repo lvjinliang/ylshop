@@ -1,0 +1,45 @@
+{__NOLAYOUT__}
+<notempty name="images">
+<div class="row">
+    <div class="col-lg-12">
+        <!-- Carousel -->
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+
+            <ol class="carousel-indicators hidden-xs">
+                <volist name="images" id="image">
+                <li data-target="#carousel-example-generic" data-slide-to="{$i-1}" class="active"></li>
+                </volist>
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <volist name="images" id="image">
+                <div class="item <eq name='i' value='1'>active</eq>">
+                    <a href="
+                         <notempty name="image['link']">
+                            {:U($image['link'])}
+                         <else/>
+                             javascript:void(0)
+                         </notempty>" >
+                        <img src="{$image['url']}" alt="{$image['title']}" />
+                    </a>
+
+                    <div class="header-text hidden-xs">
+                        <div class="col-md-12 text-center"></div>
+                    </div>
+
+                </div>
+                </volist>
+            </div>
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+        <!-- /carousel -->
+    </div>
+</div>
+</notempty>

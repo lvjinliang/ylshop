@@ -1,0 +1,113 @@
+<taglib name="Html" />
+<div id="main-content">
+    <div class="main-title">
+        <h2><empty name="data['id']">货品列表</h2>
+    </div>
+    <div class="main-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <ol class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ol>
+            </div>
+            <div class="col-sm-4">
+                <div class="btn-group pull-right form-botton" role="group">
+                    <a href="{$redirect}" class="btn btn-primary" role="button">
+                        返回
+                    </a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <notempty name="errorInfo">
+        <div id="erroInfo" class="alert  alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>失败！</strong>{$errorInfo}
+        </div>
+    </notempty>
+
+    <div class="admin_form">
+        <form class="form-horizontal" action="" id="theForm" method="post">
+
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover gallery_table">
+                    <thead>
+                    <tr>
+                        <volist name="data['attrPrice']['title']" id="title">
+                            <td class="text-left">{$title['attr_name']}</td>
+                        </volist>
+                        <td class="text-right">属性货号</td>
+                        <td class="text-right">库存</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <volist name="data['attrPrice']['value']" key="k" id="value">
+                            <tr>
+                                <?php $k = $key ?>
+                                <volist name="value" key="j" id="v">
+                                    <td class="text-left">{$v}</td>
+                                </volist>
+                                <td class="text-right">
+                                    <input type="hidden" value="{$data['attrPrice']['attr_ids'][$k]}" name="attr_ids[]" />
+                                    <input type="hidden" value="{$data['attrPrice']['attr_value'][$k]}" name="attr_value[]" />
+
+                                    <input type="text" value="{$data['attrPrice']['product_sn'][$k]}" name="product_sn[]" />
+                                </td>
+                                <td class="text-right">
+                                    <input type="text" value="{$data['attrPrice']['product_number'][$k]}" name="product_number[]" />
+                                </td>
+                            </tr>
+                        </volist>
+                    </tbody>
+                </table>
+            </div>
+
+            <input type="hidden" name="goods_id" value="{$data['goods_id']}" />
+            <notempty name="redirect">
+                <input type="hidden" name="redirect" value="{$redirect}" />
+            </notempty>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" name="submit" value="提交" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+</div>
+<div id="dialog" title="">
+    <p></p>
+</div>
+
+<script>
+    $(function(){
+
+        $("input[name='submit']").click(function(event){
+            event.preventDefault();
+            var data = $("#theForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "{:U('goods/add_product')}",
+                data: data,
+                dataType: 'json',
+                success: function (json) {
+                    $("#dialog>p").html(json.msg);
+                    $("#dialog").dialog({
+                        autoOpen: true,
+                        buttons: {
+                            '确定': function () {
+                                $("#dialog").dialog("close");
+                            }
+                        }
+                    });
+                }
+            });
+
+        });
+
+    });
+</script>

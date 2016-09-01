@@ -1,0 +1,124 @@
+html, body, input, textarea, select, legend {
+    color: #404040;
+}
+
+body, p, pre, blockquote, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, form, select, input, textarea, button, table, caption, tr, th, td {
+    margin: 0;
+    padding: 0;
+	font-family:"Times New Roman", "Georgia","Serif";
+}
+a, a:hover{text-decoration:none;outline: none;}
+a:focus {outline: none;text-decoration:none;} 
+ul>li{list-style-type:none;}
+.breadcrumb { background-color: #fff; border-radius: 4px;padding: 8px 0px; margin-bottom:10px;}
+.clear{clear:both;}
+
+/************** 头部开始 *************/
+#header{background: #6b6b6b url("../images/bg.png") repeat scroll 0 0;}
+#header .container-fluid{padding-left:0px;}
+#header .navbar {margin:0px;}
+#header .navbar-header .navbar-brand  {width:200px;margin-left:0px;}
+
+/************** 头部结束 *************/
+
+#main{overflow: hidden; width:100%;}
+
+/************** 左则开始 *************/
+#sidebar {
+    background: #6b6b6b url("../images/bg.png") repeat scroll 0 0; 
+    width: 40px;
+    z-index: 2;
+    position:relative;
+	/*overflow-x: hidden;
+    overflow-y: auto;*/
+	float:left;
+    margin-bottom: -10000px;
+    padding-bottom: 10000px;
+}
+#sidebar span.left_username {display:none;}
+#sidebar span.left_username span{color:red; font-size: 18px;}
+#sidebar .sidebar_flag{background-color: #F0F0F0;}
+#sidebar>ul.menu li {display: block; cursor:pointer;position: relative;}
+#sidebar>ul.menu{padding-bottom:100px;font-weight:bold;letter-spacing: 8px;}
+#sidebar>ul.menu>li.active{background:#FFFFFF;}
+#sidebar>ul.menu>li:hover{background:#FFFFFF;}
+#sidebar>ul.menu>li>a{height:35px; font-size:16px;line-height:35px;width:100%; display:block; color:#FFFFFF; }
+#sidebar>ul.menu>li.active>a{color: #515151;}
+#sidebar>ul.menu>li a:hover{color: #515151;}
+#sidebar>ul.menu>li>a>div.menu_icon{margin-left:5px; width:35px; height:35px; line-height: 35px; text-align: center;}
+#sidebar>ul.menu>li>a>span.text{margin-left:10px;}
+#sidebar ul.menu_float_right>li>a>span.text{display:none;}
+/**************二级************************/
+#sidebar>ul.menu>li>ul.submenu{display:none; }
+#sidebar>ul.menu>li>ul.submenu li>a{padding-left:50px;height:30px; font-size:14px; line-height:30px; font-weight:normal;}
+#sidebar>ul.menu>li>ul.submenu>li.active>a{color: #000000;font-weight:bold;}
+#sidebar>ul.menu>li>ul.submenu>li:hover>a{color: #000000;font-weight:bold;}
+#sidebar>ul.menu_float_right>li>ul.submenu{position:absolute;left:40px;top:0px; z-index:100;background: #6b6b6b url("../images/bg.png") repeat scroll 0 0;width:150px; }
+#sidebar>ul.menu_float_right>li>ul.submenu>li:hover{background:#F6F6F6;}
+#sidebar>ul.menu_float_right>li>ul.submenu>li.active{background:#F6F6F6;}
+#sidebar>ul.menu_float_right>li>ul.submenu>li>a{color:#FFFFFF;height:35px;line-height:35px;padding-left:20px;}
+#sidebar>ul.menu_float_right>li>ul.submenu>li:hover>a{color: #414141;}
+#sidebar>ul.menu_float_right>li>ul.submenu>li.active>a{color: #414141;}
+
+/**************三级************************/
+#sidebar>ul.menu>li>ul.submenu ul.ssmenu{ display:none; background-color: #FFF;}
+#sidebar>ul.menu>li>ul.submenu ul.ssmenu>li>a{font-size: 12px; height: 25px;line-height: 25px; padding-left: 60px;}
+#sidebar>ul.menu>li>ul.submenu ul.ssmenu>li.active>a{color:#000000;}
+#sidebar>ul.menu>li>ul.submenu ul.ssmenu>li:hover>a{color:#000000;}
+#sidebar>ul.menu_float_right>li>ul.submenu ul.ssmenu>li>a{padding-left:30px;}
+
+/************** 左侧结束 *************/
+
+/************** 主区域开始 *************/
+
+#main-content{
+    position:relative;
+    left:0px;
+	background:#FFF;
+	width:80%;
+    float:left;
+    padding:5px 5px 5px 20px;
+    margin-bottom: -10000px;
+    padding-bottom: 10000px;
+}
+
+#main-content .breadcrumb > li + li:before { color: #CCCCCC; content: " > "; padding: 0 5px;}
+#main-content .main-header a.btn{letter-spacing: 2px;}
+#main-content .main-header .form-botton{margin-bottom:10px;}
+#main-content .main-title h2 {
+    color: #445566;
+    font-size: 20px;
+    font-weight: bold;
+    margin:5px auto;
+}
+#main-content .admin_list,#main-content .admin_form{
+    width:100%;
+    display:block;
+    padding:10px;
+    border-color: #bfbfbf;
+    border-image: none;
+    border-style: solid;
+    border-width: 2px 1px 1px;
+    margin-bottom:10px;
+}
+
+#main-content .admin_form label.postion {margin-right:10px;}
+#main-content .admin_form .tab-content{padding-top:15px;}
+.search-bar{margin:10px auto;}
+
+dt.top_access{background-color: #ECECEC; padding: auto 10px; margin:10px auto; height: 40px;  }
+dd.sub_access{margin-left:20px;}
+div.ss_access{margin-left:30px;}
+/************** 主区域结束 *************/
+
+/************** 尾部开始 *************/
+#footer{
+	background: #6b6b6b url("../images/bg.png") repeat scroll 0 0;
+	height:30px;
+	clear:both;
+	text-align:center;
+	line-height:30px;
+	color:#FFF;
+}
+
+/************** 尾部结束 *************/

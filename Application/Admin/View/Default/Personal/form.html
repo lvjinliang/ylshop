@@ -1,0 +1,119 @@
+<div id="main-content">
+
+    <div class="main-title"><h2>编辑个人信息</h2></div>
+    <div class="main-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <ol class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ol>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <notempty name="success">
+        <div id="success" class="alert  alert-success">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>{$success}</strong>
+        </div>
+    </notempty>
+
+    <notempty name="errorInfo">
+        <div id="erroInfo" class="alert  alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>失败！</strong>{$errorInfo}
+        </div>
+    </notempty>
+
+    <div class="admin_form">
+        <form class="form-horizontal" action="" id="theForm" method="post">
+            <div class="form-group">
+                <label for="name" class="col-sm-2 control-label">用户名：</label>
+                <div class="col-sm-10">
+                    <input disabled="true" type="text" id="name" class="form-control" name="name" placeholder="用户名" value="{$data['name']}" />
+
+                </div>
+            </div>
+
+            <div class="form-group <notempty name="error['old_password']">has-error </notempty>">
+            <label for="old_password" class="col-sm-2 control-label">旧密码：</label>
+            <div class="col-sm-10">
+                <input type="text" id="old_password" class="form-control" name="old_password" placeholder="旧密码" value="" autocomplete="off" />
+                <notempty name="error['password']">
+                    <span class="help-block">{$error['old_password']}</span>
+                    <else />
+                    <span class="help-block">由6到16位字符组成</span>
+                </notempty>
+            </div>
+    </div>
+
+            <div class="form-group <notempty name="error['password']">has-error </notempty>">
+                <label for="password" class="col-sm-2 control-label">新密码：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="password" class="form-control" name="password" placeholder="新密码" value="" autocomplete="off" />
+                    <notempty name="error['password']">
+                        <span class="help-block">{$error['password']}</span>
+                        <else />
+                        <span class="help-block">由6到16位字符组成</span>
+                    </notempty>
+                </div>
+            </div>
+
+            <div class="form-group <notempty name="error['re_password']">has-error </notempty>">
+                <label for="re_password" class="col-sm-2 control-label">重复密码：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="re_password" class="form-control" name="re_password" placeholder="重复密码" value="" autocomplete="off"/>
+                    <notempty name="error['re_password']">
+                        <span class="help-block">{$error['re_password']}</span>
+                    </notempty>
+                </div>
+            </div>
+
+            <div class="form-group ">
+            <label for="truename" class="col-sm-2 control-label">姓名：</label>
+            <div class="col-sm-10">
+                <input type="text" id="truename" class="form-control" name="truename" placeholder="姓名" value="{$data['truename']}" />
+            </div>
+            </div>
+
+            <div class="form-group">
+                <label for="sex" class="col-sm-2 control-label">性别：</label>
+                <div class="col-sm-10">
+                    <select id="sex" class="form-control" name="sex" >
+                        <option value="1" <eq name="data['sex']" value="1">selected="selected"</eq>>男</option>
+                        <option value="2" <eq name="data['sex']" value="0">selected="selected"</eq>>女</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="birthday" class="col-sm-2 control-label">出生日期：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="birthday" class="form-control" name="birthday" placeholder="出生日期" value="{$data['birthday']}" />
+                </div>
+            </div>
+
+
+            <notempty name="data['id']">
+                <input type="hidden" name="id" value="{$data['id']}" />
+            </notempty>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" value="提交" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+
+</div>
+<script type="text/javascript" language="javascript">
+    $(function() {
+        setDatepicker($("#birthday"));
+        $("#password").val('');
+    });
+</script>

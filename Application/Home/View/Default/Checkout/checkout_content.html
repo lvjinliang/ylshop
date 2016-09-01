@@ -1,0 +1,323 @@
+{__NOLAYOUT__}
+<div class="row">
+    <div class="col-xs-12"><h4>收获地址</h4></div>
+</div>
+<div class="row address">
+    {$data['addressList']}
+</div>
+<notempty name="data['error']['addressId']">
+    <div class="row">
+        <div class="col-xs-12 has-error">
+            <span class="help-block">{$data['error']['addressId']}</span>
+        </div>
+    </div>
+</notempty>
+<div class="row">
+    <div class="col-xs-12">
+        <a href="javascript:void(0)" class="btn-address enable" data-url="{:U('Home/address/add')}">
+            <span class="glyphicon glyphicon-plus"></span> 新增地址
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12"><h4>配送方式</h4></div>
+</div>
+<div class="row shipping">
+    <volist name="data['shippingList']" id="shipping">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="shipping-content text-center
+                  <notempty name='Think.session.checkout.shippingCode'>
+                  <eq name='shipping["code"]'
+                      value='$Think.session.checkout.shippingCode'>
+                      selected
+                  </eq>
+                  </notempty>"
+                  data="{$shipping['code']}">
+                 {$shipping['name']}
+            </div>
+        </div>
+    </volist>
+    <input type="hidden" name="shipping_code" value="<notempty name='Think.session.checkout.shippingCode'>{$Think.session.checkout.shippingCode}</notempty>" autocomplete="off" />
+    <notempty name="data['error']['shippingCode']">
+        <div class="col-xs-12 has-error">
+            <span class="help-block">{$data['error']['shippingCode']}</span>
+        </div>
+    </notempty>
+</div>
+
+<div class="row">
+    <div class="col-xs-12"><h4>支付方式</h4></div>
+</div>
+<div class="row payment">
+    <volist name="data['paymentList']" id="payment">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="payment-content text-center
+                 <notempty name="Think.session.checkout.shippingCode">
+                 <eq name='payment["code"]' value='$Think.session.checkout.paymentCode'>
+                  selected
+                 </eq>
+                 </notempty>"
+                 data="{$payment['code']}">
+                 {$payment['name']}
+            </div>
+        </div>
+    </volist>
+    <input type="hidden" name="payment_code" value="<notempty name="Think.session.checkout.paymentCode">{$Think.session.checkout.paymentCode}</notempty>" autocomplete="off" />
+    <notempty name="data['error']['paymentCode']">
+        <div class="col-xs-12 has-error">
+            <span class="help-block">{$data['error']['paymentCode']}</span>
+        </div>
+    </notempty>
+    <div class="clear"></div>
+    <div class="form-group <notempty name="data['error']['pay_integral']">has-error</notempty> " >
+        <notempty name="data['pay_integral']" >
+        <div class="inner-payment col-xs-12">
+            使用积分 <input type="text" placeholder="积分" name="pay_integral" id="pay_integral" value="{$data['use_pay_integral']}" autocomplete="off" />
+            <p>您还有<span style="color:red;">{$data['pay_integral']}</span>积分<gt name="data['pay_integral']" value="$data['canUseIntegral']">  ,此订单最多可用<span style="color:red;">{$data['canUseIntegral']}</span>积分.</gt></p>
+            <notempty name="data['error']['pay_integral']">
+                <span class="help-block">{$data['error']['pay_integral']}</span>
+            </notempty>
+        </div>
+        </notempty>
+    </div>
+    <div class="form-group <notempty name="data['error']['money']">has-error</notempty> " >
+        <notempty name="data['money']" >
+        <div class="inner-payment col-xs-12">
+            使用余额 <input type="text" placeholder="余额" name="money" id="money" value="{$data['use_money']}" autocomplete="off" />
+            <p>您还有<span style="color:red;">{$data['money']}</span>余额</p>
+            <notempty name="data['error']['money']">
+                <span class="help-block">{$data['error']['money']}</span>
+            </notempty>
+        </div>
+        </notempty>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-xs-12"><h4>开具发票</h4></div>
+</div>
+<div class="row invoice">
+    <div class="col-lg-12">
+        <div class="invoice_content">
+            <div class="invoice_title">
+                <label><input type="radio" name="invoice_status" value="1" <eq name="data['invoice_status']" value="1" >checked="true"</eq> autocomplete="off" />需要发票</label>
+                <label><input type="radio" name="invoice_status" value="0" <eq name="data['invoice_status']" value="0" >checked="true"</eq> autocomplete="off" />不需要发票</label>
+            </div>
+            <div class="form-group invoice_body <notempty name="data['error']['invoice_title']">has-error</notempty>" <eq name="data['invoice_status']" value="0" >style="display:none;"</eq> >
+                <div class="col-sm-10">
+
+                    <select name="invoice_type" autocomplete="off">
+                        <option value="1" <eq name="data['invoice_type']" value="1" >selected="true"</eq>>个人</option>
+                        <option value="2"  <eq name="data['invoice_type']" value="2" >selected="true"</eq>>公司</option>
+                    </select>
+                    <input type="text" placeholder="抬头" name="invoice_title" id="invoice_title" value="{$data['invoice_title']}" autocomplete="off" />
+                    <notempty name="data['error']['invoice_title']">
+                        <span class="help-block">{$data['error']['invoice_title']}</span>
+                    </notempty>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<notempty name="data['couponList']">
+<div class="row">
+    <div class="col-xs-12"><h4>优惠券</h4></div>
+</div>
+<div class="row comment">
+    <div class="form-group col-xs-12">
+        <select name="coupon" autocomplete="off">
+            <option value="">请选择优惠券</option>
+            <volist name="data['couponList']" id="coupon">
+                <option
+                    <eq name="coupon['id']" value="$data['coupon']">
+                        selected="true"
+                    </eq>
+                     value="{$coupon['id']}">
+                    {$coupon['name']}
+                </option>
+            </volist>
+        </select>
+    </div>
+</div>
+</notempty>
+<div class="row">
+    <div class="col-xs-12"><h4>备注</h4></div>
+</div>
+<div class="row comment">
+   <div class="form-group col-xs-12">
+       <input type="text" class="form-control" placeholder="备注" name="comment" id="comment" value="{$data['comment']}" />
+   </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-12"><h4>商品清单</h4></div>
+</div>
+<div class="row goods">
+    <volist name="data['goods']" id="goods">
+        <div class="col-sm-6 col-xs-12">
+            <div class="product well check-cart">
+                <div class=" col-sm-3">
+                    <div class="image">
+                        <a href="{:U('Home/goods/index',array('id'=>$goods['id']))}">
+                            <img src="{$goods['thumb']}" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <div class="caption">
+                        <div class="name" <eq name="goods['disabled']" value="1">style="text-decoration: line-through;"</eq>>
+                            <h3>
+                                <a href="{:U('Home/goods/index',array('id'=>$goods['id']))}" >
+                                    {$goods['name']} {$goods['attr_value']}
+                                </a>
+                            </h3>
+                        </div>
+                        <div class="info">
+                            <ul>
+                                <li>货号: {$goods['goods_sn']}<notempty name="goods['product_sn']">-{$goods['product_sn']}</notempty></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="price">
+                                ￥{$goods['price']}X{$goods['number']}
+                                <notempty name="goods['or_price']">
+                                    <span>￥{$goods['or_price']}X{$goods['number']}</span>
+                                </notempty>
+                            </div>
+                            <div>
+                                <eq name="goods['is_on_sale']" value="0">
+                                    <span style="color:red;">已下架</span>
+                                </eq>
+                                <eq name="goods['has_number']" value="0">
+                                    <span style="color:red;">商品库存不足</span>
+                                </eq>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </volist>
+</div>
+
+<notempty name="data['usePromotions']">
+    <div class="row">
+        <div class="col-xs-12"><h4>促销活动</h4></div>
+    </div>
+    <div class="row">
+        <volist name="data['usePromotions']" id="usePromotion">
+            <div class="col-xs-12">
+                <p>
+                    <span>活动名：{$usePromotion['name']}</span>
+                    <eq name="usePromotion['type']" value="5">
+                        <span>送赠品</span>
+                        <else/>
+                        <span>优惠：{$usePromotion['price']}</span>
+                    </eq>
+                </p>
+            </div>
+        </volist>
+    </div>
+</notempty>
+<notempty name="data['gift']">
+<div class="row">
+    <div class="col-xs-12"><h4>赠品</h4></div>
+</div>
+<div class="row goods">
+    <volist name="data['gift']" id="goods">
+        <div class="col-sm-6 col-xs-12">
+            <div class="product well check-cart">
+                <div class=" col-sm-3">
+                    <div class="image">
+                        <a href="{:U('Home/goods/index',array('id'=>$goods['id']))}">
+                            <img src="{$goods['thumb']}" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <div class="caption">
+                        <div class="name" <eq name="goods['disabled']" value="1">style="text-decoration: line-through;"</eq>>
+                        <h3>
+                            <a href="{:U('Home/goods/index',array('id'=>$goods['id']))}" >
+                                {$goods['name']} {$goods['attr_value']}
+                            </a>
+                        </h3>
+                    </div>
+                    <div class="info">
+                        <ul>
+                            <li>货号: {$goods['goods_sn']}<notempty name="goods['product_sn']">-{$goods['product_sn']}</notempty></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="price">
+                            ￥{$goods['price']}X{$goods['number']}
+                            <notempty name="goods['or_price']">
+                                <span>￥{$goods['or_price']}X{$goods['number']}</span>
+                            </notempty>
+                        </div>
+                        <div>
+                            <eq name="goods['is_on_sale']" value="0">
+                                <span style="color:red;">已下架</span>
+                            </eq>
+                            <eq name="goods['has_number']" value="0">
+                                <span style="color:red;">商品库存不足</span>
+                            </eq>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+</div>
+</volist>
+</div>
+</notempty>
+
+
+
+<notempty name="data['error']['goods']">
+    <div class="col-xs-12 has-error">
+        <span class="help-block">{$data['error']['goods']}</span>
+    </div>
+</notempty>
+
+
+
+<div class="row error-info" style="display:none;">
+    <div class="col-xs-12 has-error">
+        <span class="help-block"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="pricedetails col-sm-12">
+        <div class="pull-right">
+            <table>
+                <h6>小计</h6>
+                <volist name="data['totals']" id="total">
+                    <neq name="i" value="$data['totalRow']">
+                        <tr>
+                            <td>{$total['name']}</td>
+                            <td>{$total['price']}</td>
+                        </tr>
+                        <else/>
+                        <tr style="border-top: 1px solid #333">
+                            <td><h5>{$total['name']}</h5></td>
+                            <td>{$total['price']}</td>
+                        </tr>
+                    </neq>
+                </volist>
+            </table>
+            <div class="pull-right">
+                <!--<a href="javascript:void(0)" class="btn <empty name="data['error']" >btn-checkout<else />btn-discheckout</empty> order">下单</a>-->
+                <a href="javascript:void(0)" class="btn btn-checkout order">下单</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

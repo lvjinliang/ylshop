@@ -1,0 +1,190 @@
+<taglib name="Html" />
+<div id="main-content">
+    <div class="main-title">
+        <h2><empty name="data['id']">全站设置</h2>
+    </div>
+    <div class="main-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <ol class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ol>
+            </div>
+            <div class="col-sm-4">
+                <div class="btn-group pull-right form-botton" role="group">
+                    <a href="{$redirect}" class="btn btn-primary" role="button">
+                        返回
+                    </a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <notempty name="errorInfo">
+        <div id="erroInfo" class="alert  alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>失败！</strong>{$errorInfo}
+        </div>
+    </notempty>
+
+    <div class="admin_form">
+        <form class="form-horizontal" action="" id="theForm" method="post">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#base" role="tab" data-toggle="tab">基本信息</a>
+                </li>
+                <li role="presentation" >
+                    <a href="#email" role="tab" data-toggle="tab">邮箱设置</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="base">
+                    <div class="form-group">
+                        <label for="shop_url" class="col-sm-2 control-label">网站URL：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="shop_url" class="form-control" name="shop_url" placeholder="网站URL" value="{$data['shop_url']}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="shop_name" class="col-sm-2 control-label">网店名：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="shop_name" class="form-control" name="shop_name" placeholder="网店名" value="{$data['shop_name']}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="shop_title" class="col-sm-2 control-label">商店标题：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="shop_name" class="form-control" name="shop_title" placeholder="网店名" value="{$data['shop_title']}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="shop_keywords" class="col-sm-2 control-label">商店关键字：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="shop_name" class="form-control" name="shop_keywords" placeholder="商店关键字" value="{$data['shop_keywords']}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="shop_description" class="col-sm-2 control-label">商店描述：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="shop_description" class="form-control" name="shop_description" placeholder="商店描述" value="{$data['shop_description']}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">关闭网站：</label>
+                        <div class="col-sm-10">
+                            <span class="radio-inline">
+                            <input type="radio" name="shop_close" value="1" <if condition="$data['shop_close'] eq 1">checked="checked"</if> />是
+                            </span>
+                            <span class="radio-inline">
+                            <input type="radio" name="shop_close" value="0" <if condition="$data['shop_close'] eq 0">checked="checked"</if> />否
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="admin_page_size" class="col-sm-2 control-label">后台分页数：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="admin_page_size" class="form-control" name="admin_page_size" placeholder="后台分页数" value="{$data['admin_page_size']}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="page_size" class="col-sm-2 control-label">前台分页数：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="page_size" class="form-control" name="page_size" placeholder="前台分页数" value="{$data['page_size']}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="logo" class="col-sm-2 control-label">网站logo：</label>
+                        <div class="col-sm-10">
+                            <!-- 加载编辑器的容器 -->
+                            <Html:imageUpload name="logo" id="logo" src="{$data['logo']}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="encrypt_key" class="col-sm-2 control-label">加密key：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="encrypt_key" class="form-control" name="encrypt_key" placeholder="加密key" value="{$data['encrypt_key']}" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane " id="email">
+                    <div class="form-group">
+                        <label for="mail_host" class="col-sm-2 control-label">服务器的名称：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="mail_host" class="form-control" name="mail_host" placeholder="服务器的名称例如:smtp.163.com" value="{$data['mail_host']}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mail_port" class="col-sm-2 control-label">端口号：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="mail_port" class="form-control" name="mail_port" placeholder="端口号" value="{$data['mail_port']}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mail_secure" class="col-sm-2 control-label">加密方式：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="mail_secure" class="form-control" name="mail_secure" placeholder="加密方式.例如ssl" value="{$data['mail_secure']}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mail_username" class="col-sm-2 control-label">发信邮箱地址：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="mail_username" class="form-control" name="mail_username" placeholder="发信邮箱地址" value="{$data['mail_username']}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mail_password" class="col-sm-2 control-label">发信邮箱密码：</label>
+                        <div class="col-sm-10">
+                            <input type="password" id="mail_password" class="form-control" name="mail_password" placeholder="发信邮箱密码" value="{$data['mail_password']}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mail_fromname" class="col-sm-2 control-label">发件人姓名：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="mail_fromname" class="form-control" name="mail_fromname" placeholder="发件人姓名" value="{$data['mail_fromname']}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">邮件发送时间：</label>
+                        <div class="col-sm-10">
+                            <span class="radio-inline">
+                            <input type="radio" name="mail_send_time" value="1" <if condition="$data['mail_send_time'] eq 1">checked="checked"</if> />实时发
+                            </span>
+                            <span class="radio-inline">
+                            <input type="radio" name="mail_send_time" value="2" <if condition="$data['mail_send_time'] eq 2">checked="checked"</if> />定时发（需要布署计划任务）
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">注册邮箱验证：</label>
+                        <div class="col-sm-10">
+                            <span class="radio-inline">
+                            <input type="radio" name="mail_register_verify" value="0" <if condition="$data['mail_register_verify'] eq 0">checked="checked"</if> />否
+                            </span>
+                            <span class="radio-inline">
+                            <input type="radio" name="mail_register_verify" value="1" <if condition="$data['mail_register_verify'] eq 1">checked="checked"</if> />是
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" value="提交" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+
+</div>
+

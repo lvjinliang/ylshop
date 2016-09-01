@@ -1,0 +1,51 @@
+{__NOLAYOUT__}
+<notempty name="data['reviewList']">
+    <div class="orders table-responsive">
+        <table class="table table-bordered ">
+            <volist name="data['reviewList']" id="review">
+                <tr>
+                    <td colspan="6" class="order-title">
+                        <span class="pull-left">下单时间：{:date('Y-m-d',$review['order_date'])}</span>
+                        <span class="pull-right">订单号：{$review['order_no']}</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <a href="{:U('Home/goods/index',array('id'=>$review['goods_id']))}">
+                            {$review['name']}{$review['goods_attr']}
+                        </a><br/>
+                        <a href="{:U('Home/goods/index',array('id'=>$review['goods_id']))}">
+                            <img class="order-img" src="{$review['thumb']}" />
+                        </a>
+                    </td>
+                    <td class="product">
+                        <div class="price">
+                            {$review['price']}
+                            <neq name="review['or_price']" value="0">
+                                <span>{$review['or_price']}</span>
+                            </neq>
+                        </div>
+                    </td>
+                    <td>{$review['number']}</td>
+                    <td>
+                        <p>
+                            评论：{$review['content']} <br/>
+                            评论者：{$review['account_name']} <br/>
+                            评论时间：{:date('Y-m-d', $review['date_added'])}
+                        </p>
+                        <notempty name="review['reply_content']">
+                        <p>回复：{$review['reply_content']}</p>
+                        </notempty>
+                    </td>
+                </tr>
+
+            </volist>
+        </table>
+    </div>
+    <div class="row text-center">
+        {$data['show']}
+    </div>
+<else/>
+    <div class="text-center">暂无评价</div>
+</notempty>

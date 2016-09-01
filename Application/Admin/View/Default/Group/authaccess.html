@@ -1,0 +1,64 @@
+<div id="main-content">
+    <div class="main-title"><h2>访问授权</h2></div>
+    <div class="main-header">
+        <div class="row">
+        <div class="col-sm-8">
+            <ol class="breadcrumb">
+                <volist name="breadcrumbs" id="breadcrumb">
+                    <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                </volist>
+            </ol>
+        </div>
+        <div class="col-sm-4">
+            <div class="btn-group pull-right form-botton" role="group">
+                <a href="{$redirect}" class="btn btn-primary" role="button">
+                    返回
+                </a>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    </div>
+
+    <div class="admin_form">
+        <form class="form-horizontal" action="" id="theForm" method="post">
+             <volist name="data['menus']" id="menu">
+                 <dl>
+                     <dt class="top_access"><div class="checkbox"><label>
+                         <input type="checkbox" value="{$menu['id']}" name="rules[]"
+                         <if condition="in_array($menu['id'], $data['rules'])" >checked="checked"</if> />
+                         <strong>{$menu['title']}</strong>
+                     </label></div></dt>
+                     <notempty name="menu['children']">
+                         <volist name="menu['children']" id="submenu">
+                             <dd class="sub_access">
+                                 <div class="checkbox "><label>
+                                     <input type="checkbox" value="{$submenu['id']}" name="rules[]"
+                                     <if condition="in_array($submenu['id'], $data['rules'])" >checked="checked"</if> />
+                                     {$submenu['title']}
+                                 </label></div>
+                                 <div class="ss_access">
+                                     <volist name="submenu['children']" id="ssmenu">
+                                     <label class="checkbox-inline">
+                                         <input type="checkbox" value="{$ssmenu['id']}" name="rules[]"
+                                         <if condition=" in_array($ssmenu['id'], $data['rules'])" >checked="checked"</if> /> {$ssmenu['title']}
+                                     </label>
+                                     </volist>
+                                 </div>
+                             </dd>
+                         </volist>
+                     </notempty>
+                 </dl>
+
+            </volist>
+            <input type="hidden" name="redirect" value="{$redirect}" />
+            <div class="form-group">
+                <div class=" col-sm-12">
+                    <input type="submit" value="提交" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+
+</div>

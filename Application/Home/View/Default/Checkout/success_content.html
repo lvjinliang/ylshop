@@ -1,0 +1,52 @@
+{__NOLAYOUT__}
+<div class="col-lg-12">
+    <div class="title text-center">{$msg}</div>
+</div>
+<input name="change_payment" value="{$changePayment}" type="hidden" />
+<notempty name="data" >
+    <div class="col-lg-12">
+        <div class="info text-center table-responsive">
+            <table class="table table-bordered">
+                <tr>
+                    <td class="text-right" width="35%">订单号：</td>
+                    <td class="text-left">{$data['order']['order_no']}</td>
+                </tr>
+                <tr>
+                    <td class="text-right">支付金额：</td>
+                    <td class="text-left"><span style="color:red;" >{$data['order']['total']}</span></td>
+                </tr>
+                <tr>
+                    <td class="text-right">支付方式：</td>
+                    <td class="text-left">
+                        <span style="color:red;" >{$data['order']['payment_method']}</span>
+                        <span class="other-payment">其它支付方式<span class="caret"></span></span>
+                    </td>
+                </tr>
+                <tr class="payment" style="display:none;">
+                    <td colspan="2">
+                        <volist name="data['paymentList']" id="payment">
+                            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                                <div class="payment-content text-center <eq name="payment['code']" value="$data['order']['payment_code']">selected</eq>" data="{$payment['code']}" data-order="{$data['order']['order_no']}">
+                                {$payment['name']}
+                                 </div>
+                             </div>
+                        </volist>
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="title text-center">
+            <notempty name="payBut['status']">
+            <a href="{$payBut['url']}" target="_blank" class="btn btn-enbuy paynow">{$payBut['text']}</a>
+            <else />
+                <a href="{$payBut['url']}"  class="btn btn-disbuy">{$payBut['text']}</a>
+            </notempty>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="error-msg text-center text-danger"></div>
+    </div>
+</notempty>

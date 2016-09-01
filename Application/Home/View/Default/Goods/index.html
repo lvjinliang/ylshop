@@ -1,0 +1,181 @@
+<div id="page-content" class="goods-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="main-content" class="col-md-8">
+                <div class="product">
+                    <div class="col-sm-6">
+                        <div class="image swiper-container">
+                            <div class="swiper-wrapper">
+                                <volist name="data['goodsInfo']['gallerys']" id="gallery">
+                                    <div class="swiper-slide"><img class="img-responsive" src="{$gallery['url']}"></div>
+                                </volist>
+                            </div>
+                            <!-- Add Pagination -->
+                            <div class="swiper-pagination"></div>
+                            <!-- Add Arrows -->
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="caption">
+                            <div class="name"><h3>{$data['goodsInfo']['name']}</h3></div>
+                            <div class="info">
+                                <ul>
+                                    <li>品牌: {$data['goodsInfo']['brand_name']}</li>
+                                    <li>货号: {$data['goodsInfo']['goods_sn']}<notempty name="data['goodsInfo']['product_sn']">-<span class="product_sn">{$data['goodsInfo']['product_sn']}</span></notempty></li>
+                                    <li>库存:
+                                        <span class="number">
+                                            {$data['goodsInfo']['number']}
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="price">
+                                <label>￥{$data['goodsInfo']['price']}</label>
+                                <input type="hidden" name="price" value="{$data['goodsInfo']['old_price']}" />
+                                <notempty name="data['goodsInfo']['or_price']">
+                                <span>￥{$data['goodsInfo']['or_price']}</span>
+                                    <input type="hidden" name="or_price" value="{$data['goodsInfo']['old_or_price']}" />
+                                </notempty>
+                            </div>
+                            <div class="attr">
+                                <notempty name="data['goodsInfo']['attrSelect']">
+                                <ul>
+                                    <volist name="data['goodsInfo']['attrSelect']" id="attrSelect">
+                                    <li>{$key}:
+                                        <volist name="attrSelect" id="attr">
+                                        <span class="goods-attrs <eq name='i' value='1'>goods-attrs-on</eq>" attr-id="{$attr['attr_id']}">{$attr['attr_value']}</span>
+                                        </volist>
+                                    </li>
+                                    </volist>
+                                </ul>
+                                </notempty>
+                                <input type="hidden" name="id" value="{$data['goodsInfo']['id']}" />
+                                <input type="hidden" name="change_goods_attr_url" value="{$changeGoodsAttrUrl}" />
+
+                            </div>
+                            <!--<div class="rating">
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                            </div>-->
+                            <div class="well">
+                                <label>数量: </label>
+                                <input class="form-inline number" type="text" value="1">
+                                <a href="javascript:void(0)"
+                                   class="btn <gt name="data['goodsInfo']['number']" value="0">btn-enbuy<else/>btn-disbuy</gt> add-cart"
+                                    data-product_sn="{$data['goodsInfo']['product_sn']}"
+
+                                    data-goods_id="{$data['goodsInfo']['id']}"
+                                    data-add_cart_url="{:U('Home/cart/add_cart')}"
+                                >加入购物车</a>
+                            </div>
+                            <!--<div class="share well">
+                                <strong style="margin-right: 13px;">Share :</strong>
+                                <a href="#" class="share-btn" target="_blank">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                                <a href="#" class="share-btn" target="_blank">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                                <a href="#" class="share-btn" target="_blank">
+                                    <i class="fa fa-linkedin"></i>
+                                </a>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="product-desc">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#description" role="tab" data-toggle="tab">商品描述</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#attr" role="tab" data-toggle="tab">商品属性</a>
+                        </li>
+                        <li role="presentation" >
+                            <a href="#review" role="tab" data-toggle="tab">评论</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="description" class="tab-pane fade in active">
+                            {:htmlspecialchars_decode($data['goodsInfo']['content'])}
+                        </div>
+                        <div id="attr" class="tab-pane fade table-responsive">
+                            <notempty name="data['goodsInfo']['attrOnly']">
+                            <table class="table table-hover table-bordered ">
+                                <tbody>
+                                    <volist name="data['goodsInfo']['attrOnly']" id="attrOnly">
+                                    <tr>
+                                        <td>{$key}</td>
+                                        <td>{$attrOnly['attr_value']}</td>
+                                    </tr>
+                                    </volist>
+                                </tbody>
+                            </table>
+                            </notempty>
+                        </div>
+                        <div id="review" class="tab-pane fade">
+                            <div class="review-text">
+                                {$data['review']}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="product-related">
+                    <div class="heading"><h2>相关商品</h2></div>
+                    <div class="products">
+
+                    </div>
+                </div>-->
+            </div>
+            <div id="sidebar" class="col-md-4">
+                <div class="widget wid-categories">
+                    <div class="heading"><h4>分类</h4></div>
+                    <div class="content">
+                        <ul>
+                            <volist name="data['leftCategory']" id="leftCategory">
+                                <li <eq name="leftCategory['id']" value="$data['goodsInfo']['category_id']">class="active"</eq>>
+                                <a href="{:U('Home/category/index',array('id'=>$leftCategory['id']))}">
+                                    {$leftCategory['name']}
+                                </a>
+                                </li>
+                            </volist>
+                        </ul>
+                    </div>
+                </div>
+                {:W('Home/Goods/get_last_view')}
+            </div>
+        </div>
+    </div>
+
+    <div id="dialog" title="">
+        <p></p>
+    </div>
+</div>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        paginationClickable: true,
+        spaceBetween: 30,
+        centeredSlides: true,
+        autoplay: false,
+        autoplayDisableOnInteraction: false
+    });
+</script>

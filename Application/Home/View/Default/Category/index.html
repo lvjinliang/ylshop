@@ -1,0 +1,71 @@
+<div id="page-content" class="category-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="main-content" class="col-md-8">
+                <div class="goods-select">
+                    <div class="heading"><h4>商品筛选</h4></div>
+                    <div class="content">
+                       <p>
+                           <strong>品牌：</strong>
+                           <volist name="data['search']['brand']" id="brand">
+                           <a href="{$brand['url']}" <eq name="brand['isSelected']" value="1">class="selected"</eq>>
+                               {$brand['name']}
+                            </a>
+                           </volist>
+                       </p>
+                       <volist name="data['search']['attr']" id="search">
+                           <p>
+                               <strong>{$search['name']}：</strong>
+                               <volist name="search['values']" id="v">
+                                   <a href="{$search['url'][$key]}" <if condition="$search['isSelected'][$key] eq 1">class="selected"</if>>{$v}
+                                       </a>
+                               </volist>
+                           </p>
+                       </volist>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="products">
+                            {$data['goods']}
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    {$data['show']}
+                </div>
+
+            </div>
+            <div id="sidebar" class="col-md-4 ">
+                <div class="widget wid-categories">
+                    <div class="heading"><h4>分类</h4></div>
+                    <div class="content">
+                        <ul>
+                            <volist name="data['leftCategory']" id="leftCategory">
+                                <li <eq name="leftCategory['id']" value="$data['id']">class="active"</eq>>
+                                <a href="{:U('Home/category/index',array('id'=>$leftCategory['id']))}">
+                                    {$leftCategory['name']}
+                                </a>
+                                </li>
+                            </volist>
+                        </ul>
+                    </div>
+                </div>
+
+                {:W('Home/Goods/get_last_view')}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialog" title="">
+    <p></p>
+</div>

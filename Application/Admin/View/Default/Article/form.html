@@ -1,0 +1,132 @@
+<taglib name="Html" />
+<div id="main-content">
+    <div class="main-title">
+        <h2><empty name="data['id']">添加<else />编辑</empty>文章</h2>
+    </div>
+    <div class="main-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <ol class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ol>
+            </div>
+            <div class="col-sm-4">
+                <div class="btn-group pull-right form-botton" role="group">
+                    <a href="{$redirect}" class="btn btn-primary" role="button">
+                        返回
+                    </a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <notempty name="errorInfo">
+        <div id="erroInfo" class="alert  alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>失败！</strong>{$errorInfo}
+        </div>
+    </notempty>
+
+    <div class="admin_form">
+        <form class="form-horizontal" action="" id="theForm" method="post">
+            <div class="form-group <notempty name="error['title']">has-error </notempty>">
+                <label for="title" class="col-sm-2 control-label">文章名：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="title" class="form-control" name="title" placeholder="文章名" value="{$data['title']}" />
+                    <notempty name="error['title']">
+                        <span class="help-block">{$error['title']}</span>
+                    </notempty>
+                </div>
+            </div>
+
+            <div class="form-group <notempty name="error['category_id']">has-error </notempty>" >
+                <label for="category_id" class="col-sm-2 control-label">文章分类：</label>
+                <div class="col-sm-10">
+                    <select id="category_id" class="form-control" name="category_id">
+                        <option value="">--请选择分类--</option>
+                        <volist name="data['categorys']" id="category">
+                            <option value="{$category['id']}"
+                                <eq name="category['id']" value="$data['category_id']">selected="true"</eq>>
+                                {:str_repeat('&nbsp;',($category['lev']-1)*4)}{$category['name']}
+                            </option>
+                        </volist>
+                    </select>
+                    <notempty name="error['category_id']">
+                        <span class="help-block">{$error['category_id']}</span>
+                    </notempty>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="thumb" class="col-sm-2 control-label">缩略图</label>
+                <div class="col-sm-10">
+                    <!-- 加载编辑器的容器 -->
+                    <Html:imageUpload name="thumb" id="thumb" src="{$data['thumb']}" />
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div class="form-group ">
+                <label for="content" class="col-sm-2 control-label">文章内容：</label>
+                <div class="col-sm-10">
+                    <Html:editor name="content" id="content" type="UE" height="400" >
+                        {$data['content']}
+                    </Html:editor>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="keywords" class="col-sm-2 control-label">关键字：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="keywords" class="form-control" name="keywords"  value="{$data['keywords']}"  placeholder="关键字">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description" class="col-sm-2 control-label">描述：</label>
+                <div class="col-sm-10">
+                    <textarea id="description" name="description" class="form-control" rows="3">{$data['description']}</textarea>
+                </div>
+            </div>
+
+            <div class="form-group <notempty name="error['sort']">has-error </notempty>">
+                <label for="sort" class="col-sm-2 control-label">排序：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="sort" class="form-control" name="sort"  value="{$data['sort']}"  placeholder="排序">
+                    <notempty name="error['sort']">
+                        <span class="help-block">{$error['sort']}</span>
+                    </notempty>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="status" class="col-sm-2 control-label">状态：</label>
+                <div class="col-sm-10">
+                    <select id="status" class="form-control" name="status" >
+                        <option value="1" <eq name="data['status']" value="1">selected="selected"</eq>>开启</option>
+                        <option value="0" <eq name="data['status']" value="0">selected="selected"</eq>>关闭</option>
+                    </select>
+                </div>
+            </div>
+
+
+
+            <notempty name="data['id']">
+                <input type="hidden" name="id" value="{$data['id']}" />
+            </notempty>
+            <notempty name="redirect">
+                <input type="hidden" name="redirect" value="{$redirect}" />
+            </notempty>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" value="提交" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+
+</div>

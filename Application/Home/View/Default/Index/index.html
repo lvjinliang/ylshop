@@ -1,0 +1,32 @@
+<div id="page-content" class="home-page">
+    <div class="container">
+        {:W('Home/Common/main_ad', array('main-banner'))}
+        {:W('Home/Common/col_banner', array('sub-banner','3'))}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="heading"><h2>新品</h2></div>
+                <div class="products">
+                    {:W('Home/Goods/getGoodsByPositionId', array(12,4,3,3,6,12))}
+                </div>
+            </div>
+        </div>
+        {:W('Home/Common/col_banner', array('two-banner','2'))}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="heading"><h2>热门</h2></div>
+                <div class="products">
+                    {:W('Home/Goods/getGoodsByPositionId', array(15,4,3,3,6,12))}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="heading"><h2>精品</h2></div>
+                <div class="products">
+                    {:W('Home/Goods/getGoodsByPositionId', array(13,4,3,3,6,12))}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

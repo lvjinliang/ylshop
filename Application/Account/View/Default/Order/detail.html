@@ -1,0 +1,148 @@
+<div id="page-content" class="account-order-detail-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="sidebar" class="col-sm-3 ">
+                <div class="widget wid-categories">
+                    {:W('Account/common/menu')}
+                </div>
+            </div>
+
+            <div class="col-sm-9 order-detail">
+                <div class="heading"><h2>订单详细</h2></div>
+                <notempty name="data['detail']">
+                <div>
+                    <p>
+                        <span class="title">订单号：</span>
+                        <span>{$data['detail']['order_no']}</span>
+                    </p>
+                    <p>
+                        <span class="title">下单时间：</span>
+                        <span>{:date('Y-m-d',$data['detail']['date_added'])}</span>
+                    </p>
+                    <p>
+                        <span class="title">收获地址：</span>
+                        <span>{$data['detail']['shipping_province']}{$data['detail']['shipping_city']}{$data['detail']['shipping_district']} {$data['detail']['shipping_address']}</span>
+                    </p>
+                    <p>
+                        <span class="title">配送方式：</span>
+                        <span>{$data['detail']['shipping_method']}</span>
+                    </p>
+                    <p>
+                        <span class="title">支付方式：</span>
+                        <span>{$data['detail']['payment_method']}</span>
+                    </p>
+                    <eq name="data['detail']['invoice_status']" value="1">
+                    <p>
+                        <span class="title">发票：</span>
+                        <span>
+                            {$data['detail']['invoice_type']==1?'个人':'公司'}
+                            {$data['detail']['invoice_title']}
+                        </span>
+                    </p>
+                    </eq>
+                    <notempty name="data['detail']['comment']">
+                        <span class="title">备注：</span>
+                        <span>{$data['detail']['comment']}</span>
+                    </notempty>
+                </div>
+                <div><h4>商品列表</h4></div>
+                <div class="order-detail-goods table-responsive">
+                <table class="table table-bordered ">
+                    <thead>
+                        <tr>
+                            <th>商品</th>
+                            <th>单价</th>
+                            <th>数量</th>
+                            <th>实付款</th>
+                            <th>交易状态</th>
+                            <th>交易操作</th>
+                        </tr>
+                    </thead>
+                <volist name="data['detail']['goods']" id="goods">
+                    <tr>
+                        <td>
+                            <a href="{:U('Home/goods/index',array('id'=>$goods['goods_id']))}">
+                                {$goods['name']}{$goods['goods_attr']}
+                            </a><br/>
+                            <a href="{:U('Home/goods/index',array('id'=>$goods['goods_id']))}">
+                                <img class="order-img" src="{$goods['thumb']}" />
+                            </a>
+                        </td>
+                        <td class="product">
+                            <div class="price">
+                                {$goods['price']}
+                                <neq name="goods['or_price']" value="0">
+                                    <span>{$goods['or_price']}</span>
+                                </neq>
+                            </div>
+                        </td>
+                        <td>{$goods['number']}</td>
+                        <eq name="key" value="0">
+                            <td rowspan="{:count($data['detail']['goods'])}">
+                                商品总额：{$data['detail']['goods_total']}
+                                <if condition="$data['detail']['shipping'] neq 0">
+                                    <br/>含运费：{$data['detail']['shipping']}
+                                </if>
+                                <if condition="$data['detail']['sales_promotion'] neq 0">
+                                    <br/>促销额：{$data['detail']['sales_promotion']}
+                                </if>
+                                <if condition="$data['detail']['coupon'] neq 0">
+                                    <br/>优惠券：{$data['detail']['coupon']}
+                                </if>
+                                <if condition="$data['detail']['integral'] neq 0">
+                                    <br/>使用积分：{$data['detail']['integral']}
+                                </if>
+                                <if condition="$data['detail']['money'] neq 0">
+                                    <br/>使用余额：{$data['detail']['money']}
+                                </if>
+                                <if condition="$data['detail']['update_total'] neq 0">
+                                    <br/>调整金额：{$data['detail']['update_total']}
+                                </if>
+                                <br/> <span style="color:red;">实付款：{$data['detail']['total']}</span>
+                            </td>
+
+                            <td rowspan="{:count($data['detail']['goods'])}">
+                                {$data['detail']['order_status']}<br/>
+                                {$data['detail']['payment_status']}
+                            </td>
+                            <td rowspan="{:count($data['detail']['goods'])}">
+                                <if condition="($data['detail']['payment_status_id'] neq 1) AND in_array($data['detail']['order_status_id'],array(1,2))">
+                                    <a href="{:U('home/checkout/success',array('id'=> $data['detail']['order_no']))}">立即支付</a><br/>
+                                </if>
+                                <if condition="in_array($data['detail']['order_status_id'],array(1,2))">
+                                    <a class="cancel_order" href="{:U('account/order/ajax_cancel_order',array('id'=>$data['detail']['order_no']))}">取消订单</a><br/>
+                                </if>
+                                <if condition="$data['detail']['order_status_id'] eq 3">
+                                    <a class="confirm_order" href="{:U('account/order/ajax_confirm_order',array('id'=>$data['detail']['order_no']))}">确认收货</a><br/>
+                                </if>
+                                <if condition="$data['detail']['order_status_id'] eq 4">
+                                    <a class="return_order" href="{:U('account/order/ajax_return_order',array('id'=>$data['detail']['order_no']))}" >申请退货</a><br/>
+                                </if>
+
+                            </td>
+                        </eq>
+                    </tr>
+                </volist>
+                </table>
+                </div>
+                <else />
+                    <div id="error" class="alert  alert-danger">
+                        <strong>订单不存在</strong>
+                    </div>
+                </notempty>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialog" title="">
+    <div></div>
+</div>

@@ -1,0 +1,56 @@
+<div id="page-content" class="account-transaction-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="sidebar" class="col-sm-3 ">
+                <div class="widget wid-categories">
+                    {:W('Account/common/menu')}
+                </div>
+            </div>
+
+            <div id="main-content" class="col-sm-9">
+                <div class="heading">
+                    <h2>我的资金</h2>
+                </div>
+                <div class="orders table-responsive">
+                    <notempty name="data['transactionList']">
+                        <table class="table table-bordered ">
+                            <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th>金额</th>
+                                <th>说明</th>
+                            </tr>
+                            </thead>
+                            <volist name="data['transactionList']" id="transaction">
+                                <tr>
+                                    <td>{:date('Y-m-d H:i:s',$transaction['date_added'])}</td>
+                                    <td>{$transaction['money']}</td>
+                                    <td>{$transaction['title']}
+                                        <neq name="transaction['order_no']" value="0" >
+                                            (订单号：{$transaction['order_no']})
+                                        </neq>
+                                    </td>
+                                </tr>
+                            </volist>
+                        </table>
+                    </notempty>
+                </div>
+                <div class="row text-center">
+                    {$data['show']}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialog" title="">
+    <p></p>
+</div>

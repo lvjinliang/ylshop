@@ -1,0 +1,21 @@
+{__NOLAYOUT__}
+<div class="account-content">
+    <div class="navbar-header">
+        <span class="visible-xs" style="float:left;">个人中心</span>
+        <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse"
+                data-target=".navbar-account-collapse">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse navbar-account-collapse">
+        <ul  class="">
+            <volist name="data" id="menu">
+                <li <if condition="stripos($menu['href'],$currentUrl) neq false">class="active"</if> >
+                <a href="{$menu['href']}">
+                    {$menu['title']}
+                </a>
+                </li>
+            </volist>
+        </ul>
+    </div>
+</div>

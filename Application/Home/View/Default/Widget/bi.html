@@ -1,0 +1,16 @@
+{__NOLAYOUT__}
+<script language="javascript" type="text/javascript">
+   $(function(){
+       var url = "{$url}";
+       var data = "param={$param}&&pt="+$("title").html();
+       $.ajax({
+           url : url ,
+           type : "POST",
+           data : data,
+           success : function(){
+
+           }
+
+       }) ;
+   });
+</script>

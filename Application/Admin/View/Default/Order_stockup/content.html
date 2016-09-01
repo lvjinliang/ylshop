@@ -1,0 +1,102 @@
+{__NOLAYOUT__}
+<div class="search-bar">
+    <form class="form-inline" role="form" method="get" action="">
+        <div class="form-group">
+            <label for="order_no" class="control-label">订单号</label>
+            <input type="text" class="form-control" id="order_no"
+                   name="order_no"
+                   value="{$search['order_no']}"
+                   placeholder="订单号" />
+        </div>
+
+        <div class="form-group">
+            <label for="account_id" class="control-label">用户id</label>
+            <input type="text" class="form-control" id="account_id"
+                   name="account_id" value="{$search['account_id']}" placeholder="用户Id" />
+        </div>
+
+        <div class="form-group">
+            <label for="payment_status_id" class="control-label">支付状态</label>
+            <select id="payment_status_id" class="form-control" name="payment_status_id" >
+                <option value="">--请选择--</option>
+                <volist name="data['payment_status']" id="payment_status">
+                    <option value="{$payment_status['payment_status_id']}"
+                    <eq name="search['payment_status_id']"
+                        value="$payment_status['payment_status_id']">
+                        selected="selected"
+                    </eq> >
+                    {$payment_status['name']}
+                    </option>
+                </volist>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="date_added" class="control-label">下单日期</label>
+            <div class="input-group">
+                <input type="text" class="form-control"
+                       id="date_added" name="date_added"
+                       value="{$search['date_added']}"
+                       placeholder="下单日期" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">筛选</button>
+        </div>
+    </form>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <!--<th><input type="checkbox" name="checkall" value="1"> 全选</th>-->
+            <th>订单号</th>
+            <th>客户名</th>
+            <th>订单状态</th>
+            <th>下单时间</th>
+            <th>修改时间</th>
+            <th>支付方式</th>
+            <th>配送方式</th>
+            <th>总计</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <notempty name="lists">
+            <volist name="lists" id="list">
+                <tr>
+                    <!--<td><input name="check" type="checkbox" value="{$list['id']}"></td>-->
+                    <td>{$list['order_no']}</td>
+                    <td>{$list['username']}</td>
+                    <td><span style="color:red;">{$list['order_status']} {$list['payment_status']}</span></td>
+                    <td>{:date('Y-m-d H:i:s',$list['date_added'])}</td>
+                    <td>{:date('Y-m-d H:i:s',$list['date_updated'])}</td>
+                    <td>{$list['payment_method']}</td>
+                    <td>{$list['shipping_method']}</td>
+                    <td>{$list['total']}</td>
+                    <td>
+                        <notempty name="data['isShowStockupButton']">
+                        <a href="{:U('order_stockup/edit', array('id'=>$list['id']))}" class="btn btn-primary" role="button" title="编辑">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"> </span>
+                        </a>
+                        </notempty>
+                        <notempty name="data['isShowCancelButton']">
+                        <a id="order-cancel" href="{:U('order/cancel', array('id'=>$list['id']))}" class="btn btn-primary" role="button" title="取消订单">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"> </span>
+                        </a>
+                        </notempty>
+                    </td>
+                </tr>
+            </volist>
+            <else />
+            <tr><td colspan="10" style="color:red; text-align: center;">暂时无数据</td></tr>
+        </notempty>
+        </tbody>
+    </table>
+</div>
+{$show}

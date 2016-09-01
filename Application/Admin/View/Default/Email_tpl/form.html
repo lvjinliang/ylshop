@@ -1,0 +1,79 @@
+<taglib name="Html" />
+<div id="main-content">
+    <div class="main-title">
+        <h2><empty name="data['id']">添加<else />编辑</empty>邮件模板</h2>
+    </div>
+    <div class="main-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <ol class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ol>
+            </div>
+            <div class="col-sm-4">
+                <div class="btn-group pull-right form-botton" role="group">
+                    <a href="{$redirect}" class="btn btn-primary" role="button">
+                        返回
+                    </a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <notempty name="errorInfo">
+        <div id="erroInfo" class="alert  alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>失败！</strong>{$errorInfo}
+        </div>
+    </notempty>
+
+    <div class="admin_form">
+        <form class="form-horizontal" action="" id="theForm" method="post">
+            <div class="form-group <notempty name="error['title']">has-error </notempty>">
+                <label for="title" class="col-sm-2 control-label">标题：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="title" class="form-control" name="title" placeholder="标题" value="{$data['title']}" />
+                    <notempty name="error['title']">
+                        <span class="help-block">{$error['title']}</span>
+                    </notempty>
+                </div>
+            </div>
+
+            <div class="form-group <notempty name="error['content']">has-error </notempty>">
+                <label for="content" class="col-sm-2 control-label">内容：</label>
+                <div class="col-sm-10">
+                    <textarea id="content" name="content" class="form-control" rows="3">{$data['content']}</textarea>
+                    <notempty name="error['content']">
+                        <span class="help-block">{$error['content']}</span>
+                    </notempty>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="note" class="col-sm-2 control-label">备注：</label>
+                <div class="col-sm-10">
+                    <textarea id="note" name="note" class="form-control" rows="3">{$data['note']}</textarea>
+                </div>
+            </div>
+
+
+            <notempty name="data['id']">
+                <input type="hidden" name="id" value="{$data['id']}" />
+            </notempty>
+            <notempty name="redirect">
+                <input type="hidden" name="redirect" value="{$redirect}" />
+            </notempty>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" value="提交" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+
+</div>

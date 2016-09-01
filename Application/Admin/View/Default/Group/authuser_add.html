@@ -1,0 +1,89 @@
+<div id="main-content">
+    <div class="main-title"><h2>用户授权</h2></div>
+    <div class="main-header">
+        <div class="row">
+        <div class="col-sm-4">
+            <ol class="breadcrumb">
+                <volist name="breadcrumbs" id="breadcrumb">
+                    <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                </volist>
+            </ol>
+        </div>
+        <div class="col-sm-8">
+            <div class="btn-group pull-right form-botton" role="group">
+                <a href="javascript:void(0)" onclick="deleteSelect('{:U('group/authuser_add', array('gid'=>I('get.gid')))}','uid','确认是否授权选中用户')" class="btn btn-primary" role="button">
+                    授权选中
+                </a>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    </div>
+
+    <div class="admin_list" >
+        <div class="search-bar">
+            <form class="form-inline" role="form" method="get" action="__SELF__">
+                <div class="form-group">
+                    <label for="name" class="control-label">用户名：</label>
+                    <input type="text" class="form-control" id="name"
+                           name="name" value="{$search['name']}" placeholder="用户名" />
+                </div>
+                <div class="form-group">
+                    <label for="id" class="control-label">用户ID：</label>
+                    <input type="text" class="form-control" id="id"
+                           name="id" value="{$search['id']}" placeholder="用户ID" />
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">筛选</button>
+
+                </div>
+            </form>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" name="checkall" value="1"> 全选</th>
+                    <th>ID</th>
+                    <th>用户名</th>
+                    <th>性别</th>
+                    <th>姓名</th>
+                    <th>出生日期</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <notempty name="lists">
+                <volist name="lists" id="list">
+                <tr>
+                    <td><input name="check" type="checkbox" value="{$list['id']}"></td>
+                    <td>{$list['id']}</td>
+                    <td>{$list['name']}</td>
+                    <td>{:sexToText($list['sex'])}</td>
+                    <td>{$list['truename']}</td>
+                    <td>{$list['birthday']}</td>
+                    <td>{:statusToText($list['status'])}</td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="del('{:U('group/authuser_add', array('gid'=>I('get.gid')))}','{$list['id']}','uid','确认授权')" class="btn btn-primary" role="button" title="授权">
+                            <span  aria-hidden="true">授权</span>
+                        </a>
+                    </td>
+                </tr>
+                </volist>
+                <else />
+                     <tr><td colspan="10" style="color:red; text-align: center;">暂时无数据</td></tr>
+                 </notempty>
+                </tbody>
+            </table>
+        </div>
+        {$show}
+    </div>
+
+</div>
+
+<div id="dialog" title="">
+    <p></p>
+</div>

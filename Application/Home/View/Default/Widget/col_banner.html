@@ -1,0 +1,19 @@
+{__NOLAYOUT__}
+<notempty name="images">
+    <div class="row">
+        <div class="banner">
+            <volist name="images" id="image" offset="0" length="$col" >
+            <div class="col-sm-{:floor(12/$col)}">
+               <a href="
+                <notempty name="image['link']">
+                    {:U($image['link'])}
+                <else/>
+                    javascript:void(0)
+                </notempty>" title="{$image['title']}" >
+                <img src="{$image['url']}" alt="{$image['title']}" width="100%" />
+                </a>
+            </div>
+            </volist>
+        </div>
+    </div>
+</notempty>

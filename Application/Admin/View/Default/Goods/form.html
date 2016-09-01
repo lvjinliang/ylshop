@@ -1,0 +1,489 @@
+<taglib name="Html" />
+<div id="main-content">
+    <div class="main-title">
+        <h2><empty name="data['id']">添加<else />编辑</empty>商品</h2>
+    </div>
+    <div class="main-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <ol class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ol>
+            </div>
+            <div class="col-sm-4">
+                <div class="btn-group pull-right form-botton" role="group">
+                    <a href="{$redirect}" class="btn btn-primary" role="button">
+                        返回
+                    </a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <notempty name="errorInfo">
+        <div id="erroInfo" class="alert  alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>失败！</strong>{$errorInfo}
+        </div>
+    </notempty>
+
+    <div class="admin_form">
+        <form class="form-horizontal" action="" id="theForm" method="post">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#base" role="tab" data-toggle="tab">基本信息</a>
+                </li>
+                <li role="presentation">
+                    <a href="#description" role="tab" data-toggle="tab">商品详情</a>
+                </li>
+                <li role="presentation">
+                    <a href="#attribute" role="tab" data-toggle="tab">商品属性</a>
+                </li>
+                <li role="presentation">
+                    <a href="#other" role="tab" data-toggle="tab">其它信息</a>
+                </li>
+                <li role="presentation">
+                    <a href="#gallery" role="tab" data-toggle="tab">商品相册</a>
+                </li>
+
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="base">
+                    <div class="form-group <notempty name="error['name']">has-error </notempty>">
+                        <label for="name" class="col-sm-2 control-label">商品名：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="name" class="form-control" name="name" placeholder="商品名" value="{$data['name']}" />
+                            <notempty name="error['name']">
+                                <span class="help-block">{$error['name']}</span>
+                            </notempty>
+                        </div>
+                    </div>
+
+                    <div class="form-group <notempty name="error['goods_sn']">has-error </notempty>">
+                        <label for="goods_sn" class="col-sm-2 control-label">商品货号：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="goods_sn" class="form-control" name="goods_sn" placeholder="商品货号" value="{$data['goods_sn']}" />
+                            <notempty name="error['goods_sn']">
+                                <span class="help-block">{$error['goods_sn']}</span>
+                            </notempty>
+                        </div>
+                    </div>
+
+                    <div class="form-group <notempty name="error['category_id']">has-error </notempty>">
+                        <label for="pid" class="col-sm-2 control-label">商品分类：</label>
+                        <div class="col-sm-10">
+                            <select id="category" class="form-control" name="category">
+                                <option value="">--请选择分类--</option>
+                                <volist name="data['categorys']" id="category">
+                                    <option value="{$category['id']}" data-lev="{$category['lev']}">
+                                    {:str_repeat('&nbsp;',($category['lev']-1)*4)}{$category['name']}
+                                    </option>
+                                </volist>
+                            </select>
+                            <notempty name="error['category_id']">
+                                <span class="help-block">{$error['category_id']}</span>
+                            </notempty>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2  col-sm-10">
+                        <div id="product-category"
+                             class="well well-sm"
+                             style="height: 100px; overflow: auto;">
+                             <volist name="data['category_id']" id="category_id">
+                                 <div id="product-category-{$category_id}">
+                                     <span class="glyphicon glyphicon-minus" style="cursor: pointer;" aria-hidden="true"></span>{$data['category_name'][$key]}
+                                     <input type="hidden" name="category_id[]" value="{$category_id}"/>
+                                     <input type="hidden" name="category_name[]" value="{$data['category_name'][$key]}"/>
+                                     &nbsp;&nbsp;&nbsp;&nbsp;
+                                     <input name="is_primary" <eq name="data['is_primary']" value="$category_id">checked="true"</eq> type="radio" value="{$category_id}" title="是否为主分类"/>
+                                 </div>
+                             </volist>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group <notempty name="error['brand_id']">has-error </notempty>">
+                        <label for="brand_id" class="col-sm-2 control-label">商品品牌：</label>
+                        <div class="col-sm-10">
+                            <select id="brand_id" class="form-control" name="brand_id">
+                                <option value="0">--请选择品牌--</option>
+                                <volist name="data['brands']" id="brand">
+                                    <option value="{$brand['id']}" <eq name="brand['id']" value="$data['brand_id']">selected="selected"</eq>>{$brand['name']}
+                                    </option>
+                                </volist>
+                            </select>
+                            <notempty name="error['brand_id']">
+                                <span class="help-block">{$error['brand_id']}</span>
+                            </notempty>
+                        </div>
+                    </div>
+
+                    <div class="form-group <notempty name="error['suppliers_id']">has-error </notempty>">
+                        <label for="suppliers_id" class="col-sm-2 control-label">供应商：</label>
+                        <div class="col-sm-10">
+                            <select id="suppliers_id" class="form-control" name="suppliers_id">
+                                <option value="0">--请选择供应商--</option>
+                                <volist name="data['suppliers']" id="suppliers">
+                                    <option value="{$suppliers['id']}" <eq name="suppliers['id']" value="$data['suppliers_id']">selected="selected"</eq>>{$suppliers['name']}
+                                    </option>
+                                </volist>
+                            </select>
+                            <notempty name="error['brand_id']">
+                                <span class="help-block">{$error['suppliers_id']}</span>
+                            </notempty>
+                        </div>
+                    </div>
+
+                    <div class="form-group <notempty name="error['price']">has-error </notempty>">
+                        <label for="price" class="col-sm-2 control-label">商品价格：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="price" class="form-control" name="price" placeholder="商品价格" value="{$data['price']}" />
+                            <notempty name="error['price']">
+                                <span class="help-block">{$error['price']}</span>
+                            </notempty>
+                        </div>
+                    </div>
+
+                    <div class="form-group <notempty name="error['give_integral']">has-error </notempty>">
+                        <label for="give_integral" class="col-sm-2 control-label">赠送积分数：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="give_integral" class="form-control" name="give_integral" placeholder="赠送积分数" value="{$data['give_integral']}" />
+                            <notempty name="error['give_integral']">
+                                <span class="help-block">{$error['give_integral']}</span>
+                            <else />
+                                <span class="help-block">购买该商品时赠送消费积分数,-1表示按商品价格赠送</span>
+                            </notempty>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group <notempty name="error['integral']">has-error </notempty>">
+                        <label for="integral" class="col-sm-2 control-label">积分购买金额：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="integral" class="form-control" name="integral" placeholder="积分购买金额" value="{$data['integral']}" />
+
+                            <notempty name="error['integral']">
+                                <span class="help-block">{$error['integral']}</span>
+                                <else />
+                                <span class="help-block">购买该商品时最多可以使用多少积分,-1为不限</span>
+                            </notempty>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group <notempty name="error['promote_price']">has-error </notempty>">
+                        <label for="promote_price" class="col-sm-2 control-label">促销价格：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="promote_price" class="form-control" name="promote_price" placeholder="促销价格" value="{$data['promote_price']}" />
+                            <notempty name="error['promote_price']">
+                                <span class="help-block">{$error['promote_price']}</span>
+                            </notempty>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="promote_start_date" class="col-sm-2 control-label">促销开始时间：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="promote_start_date" class="form-control" name="promote_start_date" placeholder="促销开始时间" value="{$data['promote_start_date']}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="promote_start_date" class="col-sm-2 control-label">促销结束时间：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="promote_end_date" class="form-control" name="promote_end_date" placeholder="促销结束时间" value="{$data['promote_end_date']}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="thumb" class="col-sm-2 control-label">商品缩略图：</label>
+                        <div class="col-sm-10">
+                            <!-- 加载编辑器的容器 -->
+                            <Html:imageUpload name="thumb" id="thumb" src="{$data['thumb']}" />
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="form-group <notempty name="error['sort']">has-error </notempty>">
+                        <label for="sort" class="col-sm-2 control-label">排序：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="sort" class="form-control" name="sort"  value="{$data['sort']}"  placeholder="排序">
+                            <notempty name="error['sort']">
+                                <span class="help-block">{$error['sort']}</span>
+                            </notempty>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane" id="description">
+                    <div class="form-group">
+                        <label for="content" class="col-sm-2 control-label">商品详情：</label>
+                        <div class="col-sm-10">
+                            <!-- 加载编辑器的容器 -->
+                            <Html:editor name="content" id="content" type="UE" height="400" >
+                                {$data['content']}
+                            </Html:editor>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="attribute">
+                    <div class="form-group goodsAttr <notempty name="error['goods_type_id']">has-error </notempty>">
+                        <label for="goods_type_id" class="col-sm-2 control-label">商品类型：</label>
+                        <div class="col-sm-10">
+                            <select id="goods_type_id" class="form-control" name="goods_type_id">
+                                <option value="">--请选择商品类型--</option>
+                                <volist name="data['goodsTypes']" id="goodsType">
+                                    <option value="{$goodsType['id']}" <eq name="goodsType['id']" value="$data['goods_type_id']">selected="selected"</eq>>{$goodsType['name']}
+                                    </option>
+                                </volist>
+                            </select>
+
+                            <notempty name="error['goods_type_id']">
+                                <span class="help-block">{$error['goods_type_id']}</span>
+                            <else />
+                                <span class="help-block">请选择商品的所属类型，进而完善此商品的属性</span>
+                            </notempty>
+                        </div>
+                    </div>
+                    {$data['attribute_html']}
+                </div>
+
+                <div class="tab-pane" id="other">
+
+                    <div class="form-group <notempty name="error['weight']">has-error </notempty>">
+                        <label for="weight" class="col-sm-2 control-label">重量：</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <input type="text" id="weight" class="form-control" name="weight" placeholder="重量" value="{$data['weight']}" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <select class="form-control" name="weight_unit">
+                                            <option value="千克" <eq name="data['weight_unit']" value="千克"></eq>>千克</option>
+                                            <option value="克" <eq name="data['weight_unit']" value="克"></eq>>克</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <notempty name="error['weight']">
+                                <span class="help-block">{$error['weight']}</span>
+                            </notempty>
+                        </div>
+                    </div>
+
+                    <div class="form-group <notempty name="error['number']">has-error </notempty>">
+                        <label for="number" class="col-sm-2 control-label">库存数：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="number" class="form-control" name="number" placeholder="库存数" value="{$data['number']}" />
+                            <notempty name="error['number']">
+                                <span class="help-block">{$error['number']}</span>
+                            <else />
+                                <span class="help-block">商品存在货品时，库存数值取决于货品数量</span>
+                            </notempty>
+                        </div>
+                    </div>
+
+                    <div class="form-group <notempty name="error['warn_number']">has-error </notempty>">
+                        <label for="warn_number" class="col-sm-2 control-label">库存警告数：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="warn_number" class="form-control" name="warn_number" placeholder="库存警告数" value="{$data['warn_number']}" />
+                            <notempty name="error['warn_number']">
+                                <span class="help-block">{$error['warn_number']}</span>
+                            <else />
+                                <span class="help-block"> 商品存在货品时，库存数值取决于货品数量</span>
+                            </notempty>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="position" class="col-sm-2 control-label">推荐位：</label>
+                        <div class="col-sm-10">
+                            <volist name="data['positions']" id="position">
+                                <label class="postion">
+                                    <input  type="checkbox"
+                                    <if condition="in_array($position['id'], $data['position'])">
+                                        checked = "true"
+                                    </if>
+                                    value="{$position['id']}"
+                                    name="position[]"/>
+                                    {$position['name']}
+                                </label>
+                            </volist>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="is_on_sale" class="col-sm-2 control-label">是否上架：</label>
+                        <div class="col-sm-10">
+                            <select id="is_on_sale" class="form-control" name="is_on_sale" >
+                                <option value="1" <eq name="data['is_on_sale']" value="1">selected="selected"</eq>>上架</option>
+                                <option value="0" <eq name="data['is_on_sale']" value="0">selected="selected"</eq>>下架</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="is_alone_sale" class="col-sm-2 control-label">是否普通销售商品：</label>
+                        <div class="col-sm-10">
+                            <select id="is_alone_sale" class="form-control" name="is_alone_sale" >
+                                <option value="1" <eq name="data['is_alone_sale']" value="1">selected="selected"</eq>>普通销售商品</option>
+                                <option value="0" <eq name="data['is_alone_sale']" value="0">selected="selected"</eq>>配件或赠品</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="keywords" class="col-sm-2 control-label">关键字：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="keywords" class="form-control" name="keywords"  value="{$data['keywords']}"  placeholder="关键字">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="col-sm-2 control-label">描述：</label>
+                        <div class="col-sm-10">
+                            <textarea id="description" name="description" class="form-control" rows="3">{$data['description']}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="seller_note" class="col-sm-2 control-label">商家备注：</label>
+                        <div class="col-sm-10">
+                            <textarea id="seller_note" name="seller_note" class="form-control" rows="3">{$data['seller_note']}</textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="tab-pane" id="gallery">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover gallery_table">
+                            <thead>
+                            <tr>
+                                <td class="text-left">图片</td>
+                                <td class="text-right">标题</td>
+                                <td class="text-right">排序</td>
+                                <td>
+                                    <textarea style="display:none;" id="images"></textarea>
+                                    <script type="text/javascript">
+                                        var images = UE.getEditor("images",
+                                                { isShow:false,
+                                                  serverUrl :"{:U('Admin/public/ueeditor')}"});
+                                        images.ready(function (){
+                                            images.addListener("beforeInsertImage", function (t,arg){
+                                                console.log(arg);
+                                                callBeforeInsertMultImage("images", arg);
+                                            });
+                                        });
+                                    </script>
+                                    <a class="btn btn-primary" onclick="addMultImage('images');">+</a>
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                               <volist name="data['image']" id="image" >
+                                   <tr class="imageRow">
+                                       <td class="text-left">
+                                           <img height="100" width="100" src="{$image}" data-sort="{$key}">
+                                           <input type="hidden" value="{$image}" name="image[{$key}]" />
+                                       </td>
+                                       <td class="text-right">
+                                           <input type="text" value="{$data['image_title'][$key]}" name="image_title[{$key}]" />
+                                       </td>
+                                       <td class="text-right">
+                                           <input type="text" value="{$data['image_sort'][$key]}" name="image_sort[{$key}]" />
+                                       </td>
+                                       <td>
+                                           <a class="btn btn-danger" onclick="revomeImage(this);">-</a>
+                                       </td>
+                                   </tr>
+                               </volist>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+            <notempty name="data['id']">
+                <input type="hidden" name="id" value="{$data['id']}" />
+            </notempty>
+            <notempty name="redirect">
+                <input type="hidden" name="redirect" value="{$redirect}" />
+            </notempty>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" value="提交" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+
+</div>
+<script>
+    $(function(){
+        //商品分类
+        $("select[name='category']").change(function(){
+            var category_showname = "";
+            var category_id = $("select[name='category']").val();
+            if(category_id==""){
+                return false;
+            }
+            var selectOption = $("select[name='category']").find("option[value='"+category_id+"']");
+            var category_name = new Array();
+            category_name.unshift(selectOption.html().replace(/&nbsp;/g,""));
+            var lev = selectOption.attr("data-lev");
+            if(lev > 1) {
+                for(i=lev-1; i >=1; i--){
+                    category_name.unshift(selectOption.prevAll("[data-lev='"+i+"']").first().html().replace(/&nbsp;/g,""));
+                }
+            }
+            for(i=0; i<category_name.length; i++) {
+                if(i<category_name.length-1){
+                    category_showname = category_showname + category_name[i] + " > ";
+                } else {
+                    category_showname = category_showname + category_name[i];
+                }
+            }
+            $("#product-category #product-category-"+category_id).remove();
+            $('#product-category').append('<div id="product-category-' + category_id + '"><span class="glyphicon glyphicon-minus" style="cursor: pointer;" aria-hidden="true"></span> ' + category_showname+ '<input type="hidden" name="category_id[]" value="' + category_id + '" /><input type="hidden" name="category_name[]" value="'+category_showname+'"/>&nbsp;&nbsp;&nbsp;&nbsp;<input name="is_primary" type="radio" value="'+ category_id + '" title="是否为主分类"/></div>');
+
+        });
+
+        $("body").on("click","#product-category .glyphicon-minus", function(){
+            $(this).parent().remove();
+        });
+        //日期
+        setDateRange($("#promote_start_date"),$("#promote_end_date"));
+
+        $("select[name='goods_type_id']").val("{$data['goods_type_id']}");
+        $("select[name='goods_type_id']").change(function(){
+            $(this).parents(".goodsAttr").nextAll().remove();
+            if($(this).val() == ''){
+
+            } else {
+                var goodsId = $("input[name='id']").size()>0?$("input[name='id']").val():'';
+                var _this = $(this);
+                $.ajax({
+                    type: "POST",
+                    url: "{:U('Goods/ajax_get_attr')}",
+                    data: 'goodsId='+goodsId+'&goodsTypeId='+$(this).val(),
+                    dataType: 'html',
+                    success: function (html) {
+                        _this.parents(".goodsAttr").after(html);
+                    }
+                });
+            }
+        });
+
+    });
+</script>

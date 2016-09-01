@@ -1,0 +1,200 @@
+{__NOLAYOUT__}
+<notempty name="data['goods']">
+    <volist name="data['goods']" id="goods">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="product well check-cart">
+                    <div class="col-sm-2">
+                        <div class="image">
+                            <a href="{:U('Home/goods/index',array('id'=>$goods['id']))}">
+                                <img src="{$goods['thumb']}" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="caption">
+                            <div class="name" <eq name="goods['disabled']" value="1">style="text-decoration: line-through;"</eq>>
+                                <h3>
+                                    <a href="{:U('Home/goods/index',array('id'=>$goods['id']))}">
+                                        {$goods['name']} {$goods['attr_value']}
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info row">
+                                <ul class="col-sm-6">
+                                    <li>货号: {$goods['goods_sn']}<notempty name="goods['product_sn']">-{$goods['product_sn']}</notempty></li>
+                                </ul>
+                                <div class="price col-sm-6">
+                                    ￥{$goods['price']*$goods['number']}
+                                    <notempty name="goods['or_price']">
+                                        <span>￥{$goods['or_price']*$goods['number']}</span>
+                                    </notempty>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label>
+                                    <input
+                                    class="form-inline select"
+
+                                    <eq name="goods['checked']" value="1">
+                                        checked="true"
+                                    </eq>
+                                    type="checkbox"
+                                    data-product_sn="{$goods['product_sn']}"
+                                    data-goods_id="{$goods['id']}"
+                                    data-select_cart_url="{:U('Home/cart/select_cart')}"
+                                    name="cart_select[]"
+                                    value="1" />
+                                    <eq name="goods['is_on_sale']" value="0">
+                                        <span style="color:red;">已下架</span>
+                                    </eq>
+                                </label>
+                                <span>
+                                    <label>数量: </label>
+                                    <input class="form-inline number" type="text" value="{$goods['number']}" />
+                                    <eq name="goods['has_number']" value="0">
+                                        <span style="color:red;">商品库存不足</span>
+                                    </eq>
+                                    <a href="javascript:void(0)" class="btn btn-enbuy update-cart"
+                                       data-product_sn="{$goods['product_sn']}"
+                                       data-goods_id="{$goods['id']}"
+                                       data-update_cart_url="{:U('Home/cart/update_cart')}">
+                                        修改
+                                    </a>
+                                </span>
+                                <a href="javascript:void(0)"
+                                   class="btn btn-default remove-cart enable-remove"
+                                   data-product_sn="{$goods['product_sn']}"
+                                   data-goods_id="{$goods['id']}"
+                                   data-remove_cart_url="{:U('Home/cart/remove_cart')}">
+                                    删除
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </volist>
+
+    <notempty name="data['usePromotions']">
+        <div class="row">
+            <div class="col-xs-12"><h4>促销活动</h4></div>
+        </div>
+        <div class="row">
+            <volist name="data['usePromotions']" id="usePromotion">
+               <div class="col-xs-12">
+               <p>
+                   <span>活动名：{$usePromotion['name']}</span>
+                   <eq name="usePromotion['type']" value="5">
+                       <span>送赠品</span>
+                   <else/>
+                       <span>优惠：{$usePromotion['price']}</span>
+                   </eq>
+               </p>
+               </div>
+            </volist>
+        </div>
+    </notempty>
+    <notempty name="data['gift']">
+        <div class="row">
+            <div class="col-xs-12"><h4>赠品</h4></div>
+        </div>
+        <volist name="data['gift']" id="goods">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="product well check-cart">
+                        <div class="col-sm-2">
+                            <div class="image">
+                                <a href="{:U('Home/goods/index',array('id'=>$goods['id']))}">
+                                    <img src="{$goods['thumb']}" />
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="caption">
+                                <div class="name" <eq name="goods['disabled']" value="1">style="text-decoration: line-through;"</eq>>
+                                <h3>
+                                    <a href="{:U('Home/goods/index',array('id'=>$goods['id']))}">
+                                        {$goods['name']} {$goods['attr_value']}
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="info row">
+                                <ul class="col-sm-6">
+                                    <li>货号: {$goods['goods_sn']}<notempty name="goods['product_sn']">-{$goods['product_sn']}</notempty></li>
+                                </ul>
+                                <div class="price col-sm-6">
+                                    ￥{$goods['price']*$goods['number']}
+                                    <notempty name="goods['or_price']">
+                                        <span>￥{$goods['or_price']*$goods['number']}</span>
+                                    </notempty>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label>
+
+                                    <eq name="goods['is_on_sale']" value="0">
+                                        <span style="color:red;">已下架</span>
+                                    </eq>
+                                </label>
+                                    <span>
+                                        <label>数量: </label> {$goods['number']}
+
+                                        <eq name="goods['has_number']" value="0">
+                                            <span style="color:red;">商品库存不足</span>
+                                        </eq>
+                                    </span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            </div>
+        </volist>
+    </notempty>
+    <div class="row">
+        <notempty name="data['error']['goods']">
+            <div class="col-xs-12 has-error">
+                <span class="help-block">{$data['error']['goods']}</span>
+            </div>
+        </notempty>
+        <div class="col-sm-12">
+            <div class="pull-right"><a href="{:U('Home/index/index')}" class="btn btn-1">继续购物</a></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="pricedetails col-sm-12">
+            <div class="pull-right">
+                <table>
+                    <h6>小计</h6>
+                    <volist name="data['totals']" id="total">
+                        <neq name="i" value="$data['totalRow']">
+                            <tr>
+                                <td>{$total['name']}</td>
+                                <td>{$total['price']}</td>
+                            </tr>
+                        <else/>
+                            <tr style="border-top: 1px solid #333">
+                                <td><h5>{$total['name']}</h5></td>
+                                <td>{$total['price']}</td>
+                            </tr>
+                        </neq>
+                    </volist>
+                </table>
+                <div class="pull-right">
+                    <a href="javascript:void(0)" class="btn <empty name="data['error']" >btn-checkout<else />btn-discheckout</empty> checkout">结算</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<else />
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="text-center">购物车内暂时没有商品,<a href="{:U('Home/index/index')}" >继续购物</a>。</div>
+        </div>
+    </div>
+</notempty>

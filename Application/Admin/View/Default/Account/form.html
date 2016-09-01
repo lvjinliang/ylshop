@@ -1,0 +1,243 @@
+<taglib name="Html" />
+<div id="main-content">
+    <div class="main-title">
+        <h2>编辑会员</h2>
+    </div>
+    <div class="main-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <ol class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ol>
+            </div>
+            <div class="col-sm-4">
+                <div class="btn-group pull-right form-botton" role="group">
+                    <a href="{$redirect}" class="btn btn-primary" role="button">
+                        返回
+                    </a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <notempty name="errorInfo">
+        <div id="erroInfo" class="alert  alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>失败！</strong>{$errorInfo}
+        </div>
+    </notempty>
+
+    <div class="admin_form">
+        <form class="form-horizontal" action="" id="theForm" method="post">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#base" role="tab" data-toggle="tab">基本信息</a>
+                </li>
+                <li role="presentation">
+                    <a href="#address" role="tab" data-toggle="tab">地址信息</a>
+                </li>
+                <li role="presentation">
+                    <a href="#transaction" role="tab" data-toggle="tab">交易信息</a>
+                </li>
+
+            </ul>
+
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="base">
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">用户名：</label>
+                        <div class="col-sm-10 ">
+                            <input type="text" id="username" class="form-control" name="username" placeholder="用户名" value="{$data['username']}" disabled="true"/>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-sm-2 control-label">email：</label>
+                        <div class="col-sm-10 ">
+                            <input type="text" id="email" class="form-control" name="email" placeholder="email" value="{$data['email']}" disabled="true"/>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telephone" class="col-sm-2 control-label">手机：</label>
+                        <div class="col-sm-10 ">
+                            <input type="text" id="telephone" class="form-control" name="telephone" placeholder="手机" value="{$data['telephone']}" disabled="true"/>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="money" class="col-sm-2 control-label">余额：</label>
+                        <div class="col-sm-10 ">
+                            <input type="text" id="money" class="form-control" name="money" placeholder="余额" value="{$data['money']}" disabled="true"/>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="col-sm-2 control-label">密码：</label>
+                        <div class="col-sm-10 ">
+                            <input type="password" id="password" class="form-control" name="password" placeholder="密码" value="" autocomplete="off" />
+                        </div>
+                    </div>
+                    <input type="hidden" id="salt" class="form-control" name="salt" value="{$data['salt']}" />
+
+                    <div class="form-group">
+                        <label for="home_phone" class="col-sm-2 control-label">家庭电话：</label>
+                        <div class="col-sm-10 ">
+                            <input type="text" id="home_phone" class="form-control" name="home_phone" placeholder="家庭电话" value="{$data['home_phone']}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-2 control-label">姓：</label>
+                        <div class="col-sm-10 ">
+                            <input type="text" id="firstname" class="form-control" name="firstname" placeholder="姓" value="{$data['firstname']}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-2 control-label">名：</label>
+                        <div class="col-sm-10 ">
+                            <input type="text" id="lastname" class="form-control" name="lastname" placeholder="名" value="{$data['lastname']}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sex" class="col-sm-2 control-label">姓别：</label>
+                        <div class="col-sm-10">
+                            <select id="sex" class="form-control" name="sex" >
+                                <option value="1" <eq name="data['sex']" value="1">selected="selected"</eq>>男</option>
+                                <option value="2" <eq name="data['sex']" value="2">selected="selected"</eq>>女</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="birthday" class="col-sm-2 control-label">出生日期：</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="birthday" class="form-control" name="birthday" placeholder="出生日期" value="{$data['birthday']}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status" class="col-sm-2 control-label">状态：</label>
+                        <div class="col-sm-10">
+                            <select id="status" class="form-control" name="status" >
+                                <option value="1" <eq name="data['status']" value="1">selected="selected"</eq>>正常</option>
+                                <option value="0" <eq name="data['status']" value="0">selected="selected"</eq>>冻结</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status" class="col-sm-2 control-label">激活：</label>
+                        <div class="col-sm-10">
+                            <select id="is_validated" class="form-control" name="is_validated" >
+                                <option value="1" <eq name="data['is_validated']" value="1">selected="selected"</eq>>激活</option>
+                                <option value="0" <eq name="data['is_validated']" value="0">selected="selected"</eq>>末激活</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane" id="address">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>省市区</th>
+                                    <th>地址</th>
+                                    <th>手机</th>
+                                    <th>收获人</th>
+                                    <th>邮编</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <notempty name="data['address']">
+                                <volist name="data['address']" id="address">
+                                    <tr>
+                                        <td>{$address['province_name']}{$address['city_name']}{$address['district_name']}</td>
+                                        <td>{$address['address']}</td>
+                                        <td>{$address['telephone']}</td>
+                                        <td>{$address['name']}</td>
+                                        <td>{$address['zipcode']}</td>
+                                    </tr>
+                                </volist>
+                            <else />
+                                <tr><td colspan="5" style="color:red; text-align: center;">暂时无数据</td></tr>
+                            </notempty>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane" id="transaction">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th>金额</th>
+                                <th>说明</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <notempty name="data['transaction']">
+                                <volist name="data['transaction']" id="transaction">
+                                    <tr>
+                                        <td>
+                                            {:date('Y-m-d H:i:s',$transaction['date_added'])}
+                                        </td>
+                                        <td>{$transaction['money']}</td>
+                                        <td>{$transaction['title']}</td>
+                                    </tr>
+                                </volist>
+                                <tr>
+                                    <td colspan="3">
+                                        余额：<span style="color:red;">{$data['money']}</span>
+                                    </td>
+
+                                </tr>
+                            <else />
+                                <tr><td colspan="3" style="color:red; text-align: center;">暂时无数据</td></tr>
+                            </notempty>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <notempty name="data['id']">
+                <input type="hidden" name="id" value="{$data['id']}" />
+            </notempty>
+            <notempty name="redirect">
+                <input type="hidden" name="redirect" value="{$redirect}" />
+            </notempty>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" value="提交" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+
+</div>
+<script language="javascript" type="text/javascript">
+    setDatepicker($("#birthday"));
+</script>

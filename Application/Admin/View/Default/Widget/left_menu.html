@@ -1,0 +1,43 @@
+{__NOLAYOUT__}
+<div id="sidebar">
+    <div class="sidebar_flag">
+        <button class="show_sidebar btn">
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </button>
+        <span class="left_username">
+            欢迎您：<span>{$username}</span>
+        </span>
+    </div>
+    <ul class="menu menu_float_right">
+
+        <volist name="menus" id="menu">
+            <li class="<eq name="menu['isActive']" value="1">active<else />off</eq>">
+                <a href="{$menu['name']}" title="{$menu['title']}">
+                    <div class="menu_icon pull-left"><span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span></div>
+                    <span class="text">{$menu['title']}</span>
+                </a>
+                <notempty name="menu['children']">
+                <ul class="submenu ">
+                    <volist name="menu['children']" id="submenu">
+                    <li  class="<eq name="submenu['isActive']" value="1">active<else />off</eq>">
+                        <a href="{$submenu['name']}">{$submenu['title']}</a>
+                        <notempty name="submenu['children']">
+                        <ul class="ssmenu">
+                        <volist name="submenu['children']" id="ssmenu">
+                            <li class="<eq name="ssmenu['isActive']" value="1">active<else />off</eq>">
+                                <a href="{$ssmenu['name']}">{$ssmenu['title']}</a>
+                            </li>
+                        </volist>
+                        </ul>
+                        </notempty>
+                    </li>
+                    </volist>
+                </ul>
+                </notempty>
+                <div class="clear"></div>
+            </li>
+        </volist>
+
+    </ul>
+    <div class="clear"></div>
+</div>

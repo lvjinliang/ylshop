@@ -1,0 +1,129 @@
+<div id="main-content">
+
+    <div class="main-title"><h2><empty name="data['id']">添加<else />编辑</empty>菜单</h2></div>
+    <div class="main-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <ol class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ol>
+            </div>
+            <div class="col-sm-4">
+                <div class="btn-group pull-right form-botton" role="group">
+                    <a href="{$redirect}" class="btn btn-primary" role="button">
+                        返回
+                    </a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <notempty name="errorInfo">
+        <div id="erroInfo" class="alert  alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>失败！</strong>{$errorInfo}
+        </div>
+    </notempty>
+
+    <div class="admin_form">
+        <form class="form-horizontal" action="" id="theForm" method="post">
+            <div class="form-group <notempty name="error['title']">has-error </notempty>">
+                <label for="title" class="col-sm-2 control-label">标题：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="title" class="form-control" name="title" placeholder="标题" value="{$data['title']}" />
+                    <empty name="error['title']">
+                        <span id="title_help" class="help-block">用于后台显示的配置标题</span>
+                    <else />
+                        <span class="help-block">{$error['title']}</span>
+                    </empty>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="type" class="col-sm-2 control-label">类型：</label>
+                <div class="col-sm-10">
+
+                    <select id="type" class="form-control" name="type" >
+                        <option value="1" <eq name="data['type']" value="1">selected="selected"</eq> >链接</option>
+                        <option value="2" <eq name="data['type']" value="2">selected="selected"</eq> >菜单</option>
+                    </select>
+                    <span id="type_help" class="help-block">菜单只做为菜单</span>
+                </div>
+            </div>
+
+            <div class="form-group <notempty name="error['name']">has-error</notempty>">
+                <label for="name" class="col-sm-2 control-label">规则名：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="name" class="form-control" name="name"  value="{$data['name']}"  placeholder="规则名">
+                    <empty name="error['name']">
+                        <span id="name_help" class="help-block">类型为链接：U函数解析的URL；类型为菜单则与标题一样。</span>
+                        <else />
+                        <span class="help-block">{$error['name']}</span>
+                    </empty>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="pid" class="col-sm-2 control-label">上级菜单：</label>
+                <div class="col-sm-10">
+                    <input type="hidden" id="pid" class="form-control"  readonly="true" name="pid" value="{$data['pid']}" />
+                    <input type="text" class="form-control" readonly="true" name="p_title" value="{$data['p_title']}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="is_show" class="col-sm-2 control-label">是否显示：</label>
+                <div class="col-sm-10">
+                    <select id="is_show" class="form-control" name="is_show" >
+                        <option value="1" <eq name="data['is_show']" value="1">selected="selected"</eq>>是</option>
+                        <option value="0" <eq name="data['is_show']" value="0">selected="selected"</eq>>否</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="status" class="col-sm-2 control-label">状态：</label>
+                <div class="col-sm-10">
+                    <select id="status" class="form-control" name="status" >
+                        <option value="1" <eq name="data['status']" value="1">selected="selected"</eq>>开启</option>
+                        <option value="0" <eq name="data['status']" value="0">selected="selected"</eq>>关闭</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group <notempty name="error['sort']">has-error </notempty>">
+                <label for="sort" class="col-sm-2 control-label">排序：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="sort" class="form-control" name="sort"  value="{$data['sort']}"  placeholder="排序">
+                    <notempty name="error['sort']">
+                        <span class="help-block">{$error['sort']}</span>
+                    </notempty>
+                </div>
+            </div>
+            <div class="form-group">
+            <label for="sort" class="col-sm-2 control-label">条件：</label>
+            <div class="col-sm-10">
+                <input type="text" id="condition" class="form-control" name="condition"  value="{$data['condition']}"  placeholder="条件">
+            </div>
+            </div>
+
+            <notempty name="data['id']">
+                <input type="hidden" name="id" value="{$data['id']}" />
+            </notempty>
+            <notempty name="redirect">
+                <input type="hidden" name="redirect" value="{$redirect}" />
+            </notempty>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" value="提交" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+
+</div>

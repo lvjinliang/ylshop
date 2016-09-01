@@ -1,0 +1,49 @@
+<div id="page-content" class="account-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="sidebar" class="col-sm-3">
+                <div class="widget wid-categories">
+                    {:W('Account/common/menu')}
+                </div>
+            </div>
+
+            <div id="main-content" class="col-sm-9">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 text-right">欢迎您：</div>
+                    <div class="col-xs-8 col-sm-9">{$data['username']}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 text-right">余额：</div>
+                    <div class="col-xs-8 col-sm-9">{$data['money']}元</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 text-right">积分：</div>
+                    <div class="col-xs-8 col-sm-9">{$data['pay_integral']}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 text-right">登录次数：</div>
+                    <div class="col-xs-8 col-sm-9">{$data['login_times']}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 text-right">上次登录时：</div>
+                    <div class="col-xs-8 col-sm-9">{$data['last_time']}</div>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="dialog" title="">
+    <p></p>
+</div>

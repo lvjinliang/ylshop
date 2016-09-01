@@ -1,0 +1,59 @@
+<div id="main-content">
+    <div class="main-title"><h2>备货订单</h2></div>
+    <div class="main-header">
+        <div class="row">
+        <div class="col-sm-4">
+            <ol class="breadcrumb">
+                <volist name="breadcrumbs" id="breadcrumb">
+                    <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                </volist>
+            </ol>
+        </div>
+        <div class="col-sm-8">
+            <div class="btn-group pull-right form-botton" role="group">
+
+                <!--<a href="javascript:void(0)" onclick="deleteSelect('{:U('order/delete')}', 'id', '确认删除所选评价')" class="btn btn-primary" role="button">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"> </span>删除选中
+                </a>-->
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    </div>
+    <div id="confirm-error" class="alert  alert-danger" style="display:none;">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong class="error-msg"></strong>
+    </div>
+
+    <notempty name="error">
+        <div id="error" class="alert  alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>失败！</strong>{$error}
+        </div>
+    </notempty>
+    <notempty name="success">
+        <div id="success" class="alert  alert-success">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>成功！</strong>{$success}
+        </div>
+    </notempty>
+
+    <div class="admin_list" >
+       {$content}
+    </div>
+    <input type="hidden" name="contentUrl" value="{$contentUrl}" />
+</div>
+
+<div id="dialog" title="">
+    <p></p>
+</div>
+<script type="text/javascript" language="javascript">
+    $(function () {
+        setDatepicker($("#date_added"));
+        $("#date_added").next().click(function(){
+            $("#date_added").focus();
+        });
+
+    });
+
+</script>

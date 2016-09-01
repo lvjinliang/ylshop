@@ -1,0 +1,190 @@
+<taglib name="Html" />
+<div id="main-content">
+    <div class="main-title">
+        <h2><empty name="data['id']">添加<else />编辑</empty>优惠券</h2>
+    </div>
+    <div class="main-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <ol class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ol>
+            </div>
+            <div class="col-sm-4">
+                <div class="btn-group pull-right form-botton" role="group">
+                    <a href="{$redirect}" class="btn btn-primary" role="button">
+                        返回
+                    </a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <notempty name="errorInfo">
+        <div id="erroInfo" class="alert  alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>失败！</strong>{$errorInfo}
+        </div>
+    </notempty>
+
+    <div class="admin_form">
+        <form class="form-horizontal" action="" id="theForm" method="post">
+            <div class="form-group <notempty name="error['name']">has-error </notempty>">
+                <label for="name" class="col-sm-2 control-label">优惠券名：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="name" class="form-control" name="name" placeholder="品牌名" value="{$data['name']}" />
+                    <notempty name="error['name']">
+                        <span class="help-block">{$error['name']}</span>
+                    </notempty>
+                </div>
+            </div>
+
+            <div class="form-group <notempty name="error['code']">has-error </notempty>">
+                <label for="code" class="col-sm-2 control-label">code：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="code" class="form-control" name="code" placeholder="code" value="{$data['code']}" />
+                    <notempty name="error['code']">
+                        <span class="help-block">{$error['code']}</span>
+                    <else />
+                        <span class="help-block">客户输入code获得优惠</span>
+                    </notempty>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="account_ids" class="col-sm-2 control-label">用户ID：</label>
+                <div class="col-sm-10">
+                    <textarea id="account_ids" name="account_ids" class="form-control" rows="3">{$data['account_ids']}</textarea>
+                            <span class="help-block">
+                               不指定则所有用户可用，多个用户用英文逗号","分隔
+                            </span>
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <label for="d_type" class="col-sm-2 control-label">折扣类型：</label>
+                <div class="col-sm-10">
+                    <select id="d_type" class="form-control" name="d_type" >
+                        <option value="1" <eq name="data['d_type']" value="1">selected="selected"</eq>>固定金额</option>
+                        <option value="2" <eq name="data['d_type']" value="2">selected="selected"</eq>>百分比</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="form-group <notempty name="error['discount']">has-error </notempty>">
+                <label for="discount" class="col-sm-2 control-label">折扣：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="discount" class="form-control" name="discount" placeholder="折扣" value="{$data['discount']}" />
+                    <notempty name="error['discount']">
+                        <span class="help-block">{$error['discount']}</span>
+                    <else/>
+                        <span class="help-block">
+                            折扣类型为固定金额填减免金额数<br/>
+                            折扣类型为百分比填0-100， 80表示8折
+                        </span>
+                    </notempty>
+                </div>
+            </div>
+
+
+
+            <div class="form-group ">
+                <label for="start_time" class="col-sm-2 control-label">开始时间：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="start_time" class="form-control" name="start_time" placeholder="开始时间" value="{$data['start_time']}" />
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <label for="end_time" class="col-sm-2 control-label">结束时间：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="end_time" class="form-control" name="end_time" placeholder="结束时间" value="{$data['end_time']}" />
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <label for="min_amount" class="col-sm-2 control-label">最低消费：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="min_amount" class="form-control" name="min_amount" placeholder="最低消费" value="{$data['min_amount']}" />
+                    <span class="help-block">0为无最低消费</span>
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <label for="total" class="col-sm-2 control-label">优惠券可使用次数：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="total" class="form-control" name="total" placeholder="优惠券可使用次数" value="{$data['total']}" />
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="act_range" class="col-sm-2 control-label">优惠范围：</label>
+                <div class="col-sm-10">
+                    <select id="act_range" class="form-control" name="act_range" >
+                        <option value="99" <eq name="data['act_range']" value="1">selected="selected"</eq>>全场通用</option>
+                        <option value="1" <eq name="data['act_range']" value="1">selected="selected"</eq>>商品</option>
+                        <option value="2" <eq name="data['act_range']" value="2">selected="selected"</eq>>分类</option>
+                        <option value="3" <eq name="data['act_range']" value="3">selected="selected"</eq>>品牌</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="act_rule" class="col-sm-2 control-label">优惠规则：</label>
+                <div class="col-sm-10">
+                    <textarea id="act_rule" name="act_rule" class="form-control" rows="3">{$data['act_rule']}</textarea>
+                    <span class="help-block">
+                       优惠范围为分类：请填分类ID，多个用英文","逗号分隔,部份促销有效；<br/>
+                       优惠范围为品牌：请填品牌ID，多个用英文","逗号分隔,部份促销有效；<br/>
+                       优惠范围为商品：货号(sn)规则（货号@@属性货号）无属性货号直接填货号,多个sn用英文","逗号分隔；<br/>
+                       全场通用不设置。<br/>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="status" class="col-sm-2 control-label">状态：</label>
+                <div class="col-sm-10">
+                    <select id="status" class="form-control" name="status" >
+                        <option value="1" <eq name="data['status']" value="1">selected="selected"</eq>>开启</option>
+                        <option value="0" <eq name="data['status']" value="0">selected="selected"</eq>>关闭</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group <notempty name="error['sort']">has-error</notempty>">
+                <label for="sort" class="col-sm-2 control-label">排序：</label>
+                <div class="col-sm-10">
+                    <input type="text" id="sort" class="form-control" name="sort" placeholder="排序" value="{$data['sort']}" />
+                    <notempty name="error['sort']">
+                        <span class="help-block">{$error['sort']}</span>
+                    </notempty>
+                </div>
+            </div>
+
+
+
+            <notempty name="data['id']">
+                <input type="hidden" name="id" value="{$data['id']}" />
+            </notempty>
+            <notempty name="redirect">
+                <input type="hidden" name="redirect" value="{$redirect}" />
+            </notempty>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" value="提交" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+</div>
+<script language="javascript" type="text/javascript">
+    setDateRange($("#start_time"),$("#end_time"));
+</script>

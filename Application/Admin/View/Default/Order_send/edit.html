@@ -1,0 +1,228 @@
+<div id="main-content">
+    <div class="main-title"><h2>修改订单</h2></div>
+    <div class="main-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <ol class="breadcrumb">
+                    <volist name="breadcrumbs" id="breadcrumb">
+                        <li><a href="{$breadcrumb['href']}">{$breadcrumb['title']}</a></li>
+                    </volist>
+                </ol>
+            </div>
+            <div class="col-sm-4">
+                <div class="btn-group pull-right form-botton" role="group">
+                    <a href="{:U('order_send/index')}" class="btn btn-primary" role="button">
+                        返回
+                    </a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div class="admin_form">
+        <notempty name="errorInfo">
+            <div id="erroInfo" class="alert  alert-danger">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>失败！</strong>{$errorInfo}
+            </div>
+        </notempty>
+
+        <form action="" method="post" id="theForm" class="form-horizontal" >
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#base" role="tab" data-toggle="tab">订单详情</a>
+            </li>
+            <li role="presentation">
+                <a href="#shipping" role="tab" data-toggle="tab">支付配送</a>
+            </li>
+            <li role="presentation">
+                <a href="#goods" role="tab" data-toggle="tab">商品信息</a>
+            </li>
+            <li role="presentation">
+                <a href="#history" role="tab" data-toggle="tab">操作历史</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="base" class="tab-pane fade in active">
+                <div class="table-responsive">
+                    <table class="table table-bordered ">
+                        <tr><td width="180">订单号：</td><td>{$data['order_no']}</td></tr>
+                        <tr  class="<notempty name="error['order_status']">danger</notempty>">
+                            <td>订单状态：</td>
+                            <td>
+                                <select name="order_status_id" id="order_status_id" >
+                                    <option value="3" <eq name="data['order_status_id']" value="3">selected="true"</eq>>送货中</option>
+                                    <option value="4" <eq name="data['order_status_id']" value="4">selected="true"</eq> >确认收获</option>
+                                </select>
+                                <notempty name="error['order_status']">
+                                    <span class="text-danger">{$error['order_status']}</span>
+                                </notempty>
+                            </td>
+                        </tr>
+                        <tr><td>用户ID：</td><td>{$data['account_id']}</td></tr>
+                        <tr><td>用户名：</td><td>{$data['username']}</td></tr>
+                        <tr><td>EMAIL：</td><td>{$data['email']}</td></tr>
+                        <tr><td>联系电话：</td><td>{$data['telephone']}</td></tr>
+                        <tr><td>用户姓名：</td><td>{$data['firstname']}{$data['lastname']}</td></tr>
+
+                        <notempty name="data['comment]']">
+                        <tr><td>用户备注：</td><td><span style="color:red;">{$data['comment]']}</span></td></tr>
+                       </notempty>
+
+                        <tr><td>下单时间：</td><td>{:date('Y-m-d H:i:s', $data['date_added'])}</td></tr>
+                        <tr><td>修改时间：</td><td>{:date('Y-m-d H:i:s', $data['date_updated'])}</td></tr>
+
+                        <tr><td>下单IP：</td><td>{$data['ip']}</td></tr>
+                    </table>
+                </div>
+            </div>
+            <div id="shipping" class="tab-pane fade in ">
+                <div class="table-responsive">
+                    <table class="table table-bordered ">
+                        <tr><td width="180">配送方式：</td><td>{$data['shipping_method']}</td></tr>
+                        <tr>
+                            <td>运单号：</td>
+                            <td>{$data['shipping_no']}</td>
+                        </tr>
+                        <tr>
+                            <td>收货人：</td>
+                            <td>{$data['shipping_name']}</td>
+                        </tr>
+                        <tr>
+                            <td>收获人电话：</td>
+                            <td>{$data['shipping_telephone']}</td>
+                        </tr>
+                        <tr  class="<notempty name="error['area']">danger</notempty>">
+                            <td>收货地址：</td>
+                            <td>
+                                {$data['shipping_province']}
+                                {$data['shipping_city']}
+                                {$data['shipping_district']}
+                                {$data['shipping_address']}
+                             </td>
+                        </tr>
+                        <tr>
+                            <td>邮编：</td>
+                            <td>{$data['shipping_postcode']}</td>
+                        </tr>
+                        <tr><td>支付状态：</td><td><span style="color:red;">{$data['payment_status']}</span></td></tr>
+
+                        <tr><td>支付方式：</td><td>{$data['payment_method']}</td></tr>
+                        <tr><td>支付交易号：</td><td>{$data['payment_no']}</td></tr>
+                    </table>
+                </div>
+            </div>
+            <div id="goods" class="tab-pane fade in ">
+                <div class="table-responsive">
+                    <table class="table table-bordered ">
+                        <tr>
+                            <th>商品id</th>
+                            <th>商品名</th>
+                            <th>数量</th>
+                            <th>价格</th>
+                            <th>总计</th>
+                        </th>
+                        <volist name="data['goods']" id="goods">
+                            <tr>
+                                <td>{$goods['goods_id']}</td>
+                                <td>{$goods['name']} {$goods['goods_attr']}</td>
+                                <td>{$goods['number']}</td>
+                                <td>{$goods['price']}</td>
+                                <td>{$goods['total']}</td>
+                            </tr>
+                        </volist>
+                        <tr>
+                            <td class="text-right" colspan="4">商品总额：</td>
+                            <td>{$data['goods_total']}</td>
+                        <tr>
+                        <neq name="data['sales_promotion']" value="0">
+                        <tr>
+                            <td class="text-right" colspan="4">促销：</td>
+                            <td>{$data['sales_promotion']}</td>
+                        <tr>
+                        </neq>
+                        <neq name="data['coupon']" value="0">
+                        <tr>
+                            <td class="text-right" colspan="4">优惠券：</td>
+                            <td>{$data['coupon']}</td>
+                        <tr>
+                        </neq>
+                        <neq name="data['integral']" value="0">
+                        <tr>
+                            <td class="text-right" colspan="4">积分：</td>
+                            <td>{$data['integral']}</td>
+                        <tr>
+                        </neq>
+                        <neq name="data['money']" value="0">
+                        <tr>
+                            <td class="text-right" colspan="4">余额：</td>
+                            <td>{$data['money']}</td>
+                        <tr>
+                        </neq>
+                        <neq name="data['update_total']" value="0">
+                            <tr>
+                                <td class="text-right" colspan="4">价格调整：</td>
+                                <td>{$data['update_total']}</td>
+                            <tr>
+                        </neq>
+                        <tr>
+                            <td class="text-right" colspan="4">实付款：</td>
+                            <td>{$data['total']}</td>
+                        <tr>
+                    </table>
+                    
+                </div>
+            </div>
+            <div id="history" class="tab-pane fade in">
+                <div class="table-responsive">
+                    <table class="table table-bordered ">
+                        <tr>
+                            <th>操作者</th>
+                            <th>订单状态</th>
+                            <th>支付状态</th>
+                            <th>操作时间</th>
+                            <th>备注</th>
+                        </th>
+                        <notempty name="data['orderAction']">
+                            <volist name="data['orderAction']" id="action">
+                                <tr>
+                                    <td>{$action['action_user']}</td>
+                                    <td>{$action['order_status']}</td>
+                                    <td>{$action['payment_status']}</td>
+                                    <td>{:date('Y-m-d H:i:s',$action['date_added'])}</td>
+                                    <td>{$action['action_note']}</td>
+                                </tr>
+                            </volist>
+                            <else />
+                            <tr>
+                                <td colspan="4" class="text-center">暂无操作记录</td>
+                            </tr>
+                        </notempty>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <input type="hidden" name="redirect" value="{$redirect}"/>
+        <input type="hidden" name="id" value="{$data['id']}"/>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span style="color:red;">备注：</span></label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="action_note" value="" placeholder="备注" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" value="提交" class="btn btn-primary">
+            </div>
+        </div>
+        </form>
+        <div class="clear"></div>
+
+
+    </div>
+
+</div>
