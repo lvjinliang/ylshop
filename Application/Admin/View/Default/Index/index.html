@@ -5,36 +5,14 @@
 
 
     <div class="admin_list" >
-
-        <div class="table-responsive">
-            <h4>站点统计</h4>
-            <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th>时间</th>
-                    <th>平台</th>
-                    <th>PV</th>
-                    <th>UV</th>
-                    <th>IPV</th>
-                </tr>
-                </thead>
-                <tbody>
-                <notempty name="data['countVisit']">
-                    <volist name="data['countVisit']" id="list">
-                        <tr>
-                            <td>{$list['date']}</td>
-                            <td>{$list['type']}</td>
-                            <td>{$list['pv']}</td>
-                            <td>{$list['uv']}</td>
-                            <td>{$list['ipv']}</td>
-
-                        </tr>
-                    </volist>
-                    <else />
-                    <tr><td colspan="10" style="color:red; text-align: center;">暂时无数据</td></tr>
-                </notempty>
-                </tbody>
-            </table>
+        <div> 选择平台：
+        <select id="select_type" autocomplete="off">
+            <option value="WEB">WEB</option>
+            <option value="WAP">WAP</option>
+            <option value="APP">APP</option>
+        </select>
+        </div>
+        <div id="visit-count" style="height:400px;">
         </div>
 
         <div class="table-responsive">
@@ -100,3 +78,69 @@
     </div>
 
 </div>
+<script src="__PUBLIC__/Admin/js/echarts.min.js"></script>
+<script type="application/javascript">
+    var visitChart = echarts.init(document.getElementById('visit-count'));
+    visitChart.showLoading();
+    $.get("{:U('index/ajax_get_count_visit')}").done(function (data) {
+        set_visit_count(data);
+    });
+
+    $("#select_type").change(function () {
+        var type = $(this).val();
+        $.get("{:U('index/ajax_get_count_visit')}/type/"+type).done(function (data) {
+            console.log(data);
+            set_visit_count(data);
+        });
+    });
+
+    function set_visit_count (data) {
+        visitChart.hideLoading();
+        var option = {};
+        option.title  = {
+            left: 'center',
+            text:'访问统计'
+        };
+        option.toolbox = {
+            show: true,
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {}
+
+            }
+        };
+        option.tooltip =  {};
+        option.legend = {
+            left: 'left',
+            data:['pv', 'uv', 'ipv']
+        };
+        option.xAxis = {
+            data: data.date
+        };
+        option.yAxis = {};
+        option.series = [
+            {
+                'name' : 'pv',
+                'type': 'line',
+                'data': data.pv
+            },
+            {
+                'name' : 'uv',
+                'type': 'line',
+                'data': data.uv
+            },
+            {
+                'name' : 'ipv',
+                'type': 'line',
+                'data': data.ipv
+            }
+        ];
+        visitChart.setOption(option);
+    }
+
+</script>

@@ -77,16 +77,16 @@ class OrderModel extends CommonModel {
         $limit = isset($filter['limit']) ? $filter['limit'] : C('ADMIN_PAGE_SIZE');
         $limit = empty($limit) ? C('ADMIN_PAGE_SIZE') : $limit;
         $sql = "SELECT td.setting_date,
-                    ( SELECT count(1) FROM __PREFIX__order
-                      WHERE FROM_UNIXTIME(date_added,'%Y-%m-%d')= td.setting_date) all_rows,
-                    ( SELECT sum(total) FROM __PREFIX__order
-                      WHERE FROM_UNIXTIME(date_added,'%Y-%m-%d')= td.setting_date) all_total,
-                    ( SELECT count(1) FROM __PREFIX__order
-                      WHERE FROM_UNIXTIME(date_added,'%Y-%m-%d')= td.setting_date AND payment_status_id=1) pay_rows,
-                    ( SELECT sum(total) FROM __PREFIX__order
-                      WHERE FROM_UNIXTIME(date_added,'%Y-%m-%d')= td.setting_date AND payment_status_id=1) pay_total,
-                   ( SELECT count(1) FROM __PREFIX__order
-                     WHERE FROM_UNIXTIME(date_added,'%Y-%m-%d')= td.setting_date AND order_status_id in(7,9)) back_rows
+                    IFNULL( (SELECT count(1) FROM __PREFIX__order
+                      WHERE FROM_UNIXTIME(date_added,'%Y-%m-%d')= td.setting_date), 0) all_rows,
+                    IFNULL( (SELECT sum(total) FROM __PREFIX__order
+                      WHERE FROM_UNIXTIME(date_added,'%Y-%m-%d')= td.setting_date), 0) all_total,
+                    IFNULL( (SELECT count(1) FROM __PREFIX__order
+                      WHERE FROM_UNIXTIME(date_added,'%Y-%m-%d')= td.setting_date AND payment_status_id=1), 0) pay_rows,
+                    IFNULL( (SELECT sum(total) FROM __PREFIX__order
+                      WHERE FROM_UNIXTIME(date_added,'%Y-%m-%d')= td.setting_date AND payment_status_id=1), 0) pay_total,
+                    IFNULL( (SELECT count(1) FROM __PREFIX__order
+                     WHERE FROM_UNIXTIME(date_added,'%Y-%m-%d')= td.setting_date AND order_status_id in(7,9)), 0) back_rows
                   FROM __PREFIX__tmp_date td
                   WHERE  td.setting_date>='{$filter['start_date']}'
                   AND td.setting_date<='{$filter['end_date']}'
