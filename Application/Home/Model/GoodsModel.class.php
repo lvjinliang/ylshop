@@ -341,7 +341,6 @@ class GoodsModel extends Model {
     public function getGoodsByCart($cartObj, $selectGoods = array(), $hasSelected = false) {
         $cart = $cartObj->getCart();
         $data = $this->getCartAndGiftGoods($cart, $selectGoods, $hasSelected);
-
         //更改购物车选中对象
         if (!empty($data)) {
             $updateCart = array();
@@ -471,7 +470,7 @@ class GoodsModel extends Model {
         }
         $sql = "SELECT g.id, g.name , g.thumb, g.number,g.is_on_sale,g.goods_sn,
                 IF( (UNIX_TIMESTAMP()>=g.promote_start_date AND UNIX_TIMESTAMP()<=g.promote_end_date),g.promote_price, g.price) price,
-                IF( (UNIX_TIMESTAMP()>=g.promote_start_date AND UNIX_TIMESTAMP()<=g.promote_end_date),price, null) or_price, g.integral, g.brand_id, g.suppliers_id, g.give_integral
+                IF( (UNIX_TIMESTAMP()>=g.promote_start_date AND UNIX_TIMESTAMP()<=g.promote_end_date),price, 0) or_price, g.integral, g.brand_id, g.suppliers_id, g.give_integral
                 FROM __PREFIX__goods g
                 WHERE g.id  in({$goodsIds})";
         $data = $this->query($sql);
@@ -489,7 +488,7 @@ class GoodsModel extends Model {
         $sql = "SELECT g.id, g.name , g.thumb, p.product_number number,
                     g.is_on_sale, p.attr_value,p.attr_ids,p.product_sn,g.goods_sn,
                     IF( (UNIX_TIMESTAMP()>=g.promote_start_date AND UNIX_TIMESTAMP()<=g.promote_end_date),g.promote_price, g.price) price,
-                    IF( (UNIX_TIMESTAMP()>=g.promote_start_date AND UNIX_TIMESTAMP()<=g.promote_end_date),price, null) or_price, g.integral, g.brand_id, g.suppliers_id, g.give_integral
+                    IF( (UNIX_TIMESTAMP()>=g.promote_start_date AND UNIX_TIMESTAMP()<=g.promote_end_date),price, 0) or_price, g.integral, g.brand_id, g.suppliers_id, g.give_integral
                 FROM  __PREFIX__products p
                 INNER JOIN __PREFIX__goods g
                 ON p.goods_id = g.id

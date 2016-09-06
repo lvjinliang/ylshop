@@ -83,9 +83,9 @@ class OrderModel extends Model {
                 $orderGoods[$key]['name'] = $val['name'];
                 $orderGoods[$key]['number'] = $val['number'];
                 $orderGoods[$key]['price'] = $val['price'];
-                $orderGoods[$key]['or_price'] = $val['or_price'];
+                $orderGoods[$key]['or_price'] = !empty($val['or_price']) ? $val['or_price'] : 0;
                 $orderGoods[$key]['total'] = $val['price']*$val['number'];
-                $orderGoods[$key]['goods_attr'] = $val['attr_value'];
+                $orderGoods[$key]['goods_attr'] = !empty($val['or_price']) ? $val['attr_value'] : '';
                 $orderGoods[$key]['is_gift'] = 0;
             }
             //赠品
@@ -97,9 +97,9 @@ class OrderModel extends Model {
                     $orderGoods[$key]['name'] = $val['name'];
                     $orderGoods[$key]['number'] = $val['number'];
                     $orderGoods[$key]['price'] = $val['price'];
-                    $orderGoods[$key]['or_price'] = $val['or_price'];
+                    $orderGoods[$key]['or_price'] = !empty($val['or_price']) ? $val['or_price'] : 0;
                     $orderGoods[$key]['total'] = $val['price']*$val['number'];
-                    $orderGoods[$key]['goods_attr'] = $val['attr_value'];
+                    $orderGoods[$key]['goods_attr'] = !empty($val['or_price']) ? $val['attr_value'] : '';
                     $orderGoods[$key]['is_gift'] = 1;
                 }
             }
@@ -109,6 +109,7 @@ class OrderModel extends Model {
                 $this->rollback();
                 return false;
             }
+
             //订单小计
             $orderTotal = array();
             $orderTotal['order_id'] = $orderId;

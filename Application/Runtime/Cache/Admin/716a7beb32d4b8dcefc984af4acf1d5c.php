@@ -81,7 +81,7 @@
 <div id="main">
     <?php echo W('Common/leftMenu');?>
     <div id="main-content">
-    <div class="main-title"><h2>用户统计</h2></div>
+    <div class="main-title"><h2>商品列表</h2></div>
     <div class="main-header">
         <div class="row">
         <div class="col-sm-4">
@@ -91,10 +91,12 @@
         </div>
         <div class="col-sm-8">
             <div class="btn-group pull-right form-botton" role="group">
+                <a href="<?php echo U('goods/add');?>" class="btn btn-primary" role="button">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
+                </a>
 
-
-                <a href="javascript:void(0)" onclick="download_excel('<?php echo ($downloadUrl); ?>');" class="btn btn-primary" role="button">
-                    <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span>导出
+                <a href="javascript:void(0)" onclick="deleteSelect('<?php echo U('goods/delete');?>','id','确认将所选项移入回收站')" class="btn btn-primary" role="button">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"> </span>回收站
                 </a>
             </div>
         </div>
@@ -115,19 +117,38 @@
         <div class="search-bar">
             <form class="form-inline" role="form" method="get" action="<?php echo U(ACTION_NAME);?>">
                 <div class="form-group">
-                    <label for="start_date" class="control-label">开始日期：</label>
-                    <input type="text" class="form-control" id="start_date"
-                           name="start_date"
-                           value="<?php echo ($search['start_date']); ?>"
-                           placeholder="开始日期" />
+                    <label for="name" class="control-label">商品名：</label>
+                    <input type="text" class="form-control" id="name"
+                           name="name" value="<?php echo ($search['name']); ?>" placeholder="商品名" />
                 </div>
                 <div class="form-group">
-                    <label for="end_date" class="control-label">结束日期：</label>
-                    <input type="text" class="form-control" id="end_date"
-                           name="end_date"
-                           value="<?php echo ($search['end_date']); ?>"
-                           placeholder="结束日期" />
+                    <label for="category_id" class="control-label">主分类：</label>
+                    <select id="category_id" class="form-control" name="category_id">
+                        <option value="">--请选择分类--</option>
+                        <?php if(is_array($data['categorys'])): $i = 0; $__LIST__ = $data['categorys'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$category): $mod = ($i % 2 );++$i;?><option <?php if($category['id'] == $search['category_id']): ?>selected="true"<?php endif; ?> value="<?php echo ($category['id']); ?>">
+                                <?php echo str_repeat('&nbsp;',($category['lev']-1)*4); echo ($category['name']); ?>
+                            </option><?php endforeach; endif; else: echo "" ;endif; ?>
+                    </select>
                 </div>
+                <div class="form-group">
+                    <label for="brand_id" class="control-label">品牌：</label>
+                    <select id="brand_id" class="form-control" name="brand_id">
+                        <option value="0">--请选择商品品牌--</option>
+                        <?php if(is_array($data['brands'])): $i = 0; $__LIST__ = $data['brands'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$brand): $mod = ($i % 2 );++$i;?><option value="<?php echo ($brand['id']); ?>" <?php if(($search['brand_id']) == $brand['id']): ?>selected="selected"<?php endif; ?>><?php echo ($brand['name']); ?>
+                            </option><?php endforeach; endif; else: echo "" ;endif; ?>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="position_id" class="control-label">推荐位：</label>
+                    <select id="position_id" class="form-control" name="position_id">
+                        <option value="0">--请选择推荐位--</option>
+                        <?php if(is_array($data['positions'])): $i = 0; $__LIST__ = $data['positions'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$position): $mod = ($i % 2 );++$i;?><option value="<?php echo ($position['id']); ?>" <?php if(($search['position_id']) == $position['id']): ?>selected="selected"<?php endif; ?>><?php echo ($position['name']); ?>
+                            </option><?php endforeach; endif; else: echo "" ;endif; ?>
+                    </select>
+                </div>
+
+
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">筛选</button>
@@ -140,20 +161,47 @@
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th>日期</th>
-                    <th>注册数</th>
-                    <th>激活数</th>
+                    <th><input type="checkbox" name="checkall" value="1"> 全选</th>
+                    <th>ID</th>
+                    <th>商品名</th>
+                    <th>货号</th>
+                    <th>主分类</th>
+                    <th>品牌名</th>
+                    <th>价格</th>
+                    <th>上架</th>
+                    <th>推荐位</th>
+                    <th>排序</th>
+                    <th>库存</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php if(!empty($lists)): if(is_array($lists)): $i = 0; $__LIST__ = $lists;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?><tr>
-                    <td><?php echo ($list['setting_date']); ?></td>
-                    <td><?php echo ($list['all_rows']); ?></td>
-                    <td><?php echo ($list['all_rows']); ?></td>
-
+                    <td><input name="check" type="checkbox" value="<?php echo ($list['id']); ?>"></td>
+                    <td><?php echo ($list['id']); ?></td>
+                    <td><?php echo ($list['name']); ?></td>
+                    <td><?php echo ($list['goods_sn']); ?></td>
+                    <td><?php echo ($list['category_name']); ?></td>
+                    <td><?php echo ($list['brand_name']); ?></td>
+                    <td><?php echo ($list['price']); ?></td>
+                    <td><?php echo isOnSaleToText($list['is_on_sale']);?></td>
+                    <td><?php echo ($list['position_name']); ?></td>
+                    <td><?php echo ($list['sort']); ?></td>
+                    <td><?php echo ($list['number']); ?></td>
+                    <td>
+                        <a href="<?php echo U('goods/update', array('id'=>$list['id']));?>" class="btn btn-primary" role="button" title="编辑">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"> </span>
+                        </a>
+                        <a href="javascript:void(0);" onclick="del('<?php echo U('goods/delete');?>','<?php echo ($list['id']); ?>','id', '确认将此项移入回收站')"  class="btn btn-primary" role="button" title="回收站">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"> </span>
+                        </a>
+                        <?php if(($list['isAttrPrice']) == "true"): ?><a href="<?php echo U('goods/product_list', array('id'=>$list['id']));?>" class="btn btn-primary" role="button" title="编辑">
+                                货品列表
+                            </a><?php endif; ?>
+                    </td>
                 </tr><?php endforeach; endif; else: echo "" ;endif; ?>
                 <?php else: ?>
-                     <tr><td colspan="10" style="color:red; text-align: center;">暂时无数据</td></tr><?php endif; ?>
+                     <tr><td colspan="12" style="color:red; text-align: center;">暂时无数据</td></tr><?php endif; ?>
                 </tbody>
             </table>
         </div>
@@ -165,9 +213,6 @@
 <div id="dialog" title="">
     <p></p>
 </div>
-<script language="javascript" type="text/javascript">
-    setDateRange($("#start_date"),$("#end_date"));
-</script>
 
 </div>
 <div id="footer">

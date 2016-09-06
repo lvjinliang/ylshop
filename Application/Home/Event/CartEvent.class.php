@@ -22,7 +22,6 @@ class CartEvent extends Controller {
                 $goodses[] = $val;
             }
         }
-
         $data['selectGoods'] = $goodses;
         $data['canUseIntegral'] = 0;
         $data['giveIntegral'] = 0;

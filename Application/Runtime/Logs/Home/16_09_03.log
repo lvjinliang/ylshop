@@ -1,0 +1,158 @@
+[ 2016-09-03T01:29:39+08:00 ] 127.0.0.1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `yl_config` [ RunTime:0.0290s ]
+SQL: SELECT * FROM `yl_config`  [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+SQL: SHOW COLUMNS FROM `yl_ad` [ RunTime:0.0280s ]
+SQL: SHOW COLUMNS FROM `yl_category` [ RunTime:0.0290s ]
+SQL: SELECT * FROM `yl_category` WHERE `status` = 1 ORDER BY `sort` DESC,`id` DESC  [ RunTime:0.0020s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.083005s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.011001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.011001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+SQL: SELECT ai.* FROM yl_ad a
+                LEFT JOIN yl_ad_image ai
+                ON a.id = ai.ad_id
+                WHERE a.status=1 AND code='main-banner'
+                ORDER BY ai.sort DESC [ RunTime:0.0030s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.101006s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.015001s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.006000s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.021001s ]
+SQL: SELECT ai.* FROM yl_ad a
+                LEFT JOIN yl_ad_image ai
+                ON a.id = ai.ad_id
+                WHERE a.status=1 AND code='sub-banner'
+                ORDER BY ai.sort DESC [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.118007s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.011001s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.024001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.034002s ]
+SQL: SHOW COLUMNS FROM `yl_goods` [ RunTime:0.0280s ]
+SQL: SELECT pg.goods_id FROM yl_position_goods pg
+                LEFT JOIN yl_goods g
+                ON pg.goods_id = g.id
+                WHERE pg.position_id = '12'
+                AND g.is_on_sale=1
+                AND g.is_alone_sale=1
+                ORDER BY g.sort DESC, g.id DESC
+                LIMIT 0,4 [ RunTime:0.0030s ]
+SQL: SELECT g.id, g.name , g.thumb,
+                IF( (UNIX_TIMESTAMP()>=g.promote_start_date AND UNIX_TIMESTAMP()<=g.promote_end_date),g.promote_price, g.price) price,
+                IF( (UNIX_TIMESTAMP()>=g.promote_start_date AND UNIX_TIMESTAMP()<=g.promote_end_date),price, null) or_price
+                FROM yl_goods g
+                WHERE g.id  in(2)
+                AND g.is_on_sale=1
+                AND g.is_alone_sale=1 [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.169010s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.011001s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.074004s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.084005s ]
+SQL: SELECT ai.* FROM yl_ad a
+                LEFT JOIN yl_ad_image ai
+                ON a.id = ai.ad_id
+                WHERE a.status=1 AND code='two-banner'
+                ORDER BY ai.sort DESC [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.181010s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.008001s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.088005s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.095006s ]
+SQL: SELECT pg.goods_id FROM yl_position_goods pg
+                LEFT JOIN yl_goods g
+                ON pg.goods_id = g.id
+                WHERE pg.position_id = '15'
+                AND g.is_on_sale=1
+                AND g.is_alone_sale=1
+                ORDER BY g.sort DESC, g.id DESC
+                LIMIT 0,4 [ RunTime:0.0010s ]
+SQL: SELECT g.id, g.name , g.thumb,
+                IF( (UNIX_TIMESTAMP()>=g.promote_start_date AND UNIX_TIMESTAMP()<=g.promote_end_date),g.promote_price, g.price) price,
+                IF( (UNIX_TIMESTAMP()>=g.promote_start_date AND UNIX_TIMESTAMP()<=g.promote_end_date),price, null) or_price
+                FROM yl_goods g
+                WHERE g.id  in(2,5,3)
+                AND g.is_on_sale=1
+                AND g.is_alone_sale=1 [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.194011s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.010000s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.099006s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.108006s ]
+SQL: SELECT pg.goods_id FROM yl_position_goods pg
+                LEFT JOIN yl_goods g
+                ON pg.goods_id = g.id
+                WHERE pg.position_id = '13'
+                AND g.is_on_sale=1
+                AND g.is_alone_sale=1
+                ORDER BY g.sort DESC, g.id DESC
+                LIMIT 0,4 [ RunTime:0.0010s ]
+SQL: SELECT g.id, g.name , g.thumb,
+                IF( (UNIX_TIMESTAMP()>=g.promote_start_date AND UNIX_TIMESTAMP()<=g.promote_end_date),g.promote_price, g.price) price,
+                IF( (UNIX_TIMESTAMP()>=g.promote_start_date AND UNIX_TIMESTAMP()<=g.promote_end_date),price, null) or_price
+                FROM yl_goods g
+                WHERE g.id  in(2,5,4,3)
+                AND g.is_on_sale=1
+                AND g.is_alone_sale=1 [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.207012s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.010001s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.112006s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.121007s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.215012s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.008001s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.123007s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.130008s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.008001s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.123007s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.130008s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+

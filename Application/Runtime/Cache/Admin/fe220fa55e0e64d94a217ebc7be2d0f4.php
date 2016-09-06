@@ -80,63 +80,54 @@
 </div>
 <div id="main">
     <?php echo W('Common/leftMenu');?>
-    <div id="main-content">
-    <div class="main-title"><h2>用户统计</h2></div>
-    <div class="main-header">
-        <div class="row">
-        <div class="col-sm-4">
-            <ol class="breadcrumb">
-                <?php if(is_array($breadcrumbs)): $i = 0; $__LIST__ = $breadcrumbs;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$breadcrumb): $mod = ($i % 2 );++$i;?><li><a href="<?php echo ($breadcrumb['href']); ?>"><?php echo ($breadcrumb['title']); ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>
-            </ol>
-        </div>
-        <div class="col-sm-8">
-            <div class="btn-group pull-right form-botton" role="group">
+    
+<div id="main-content">
 
+    <div class="main-title"><h2>控制面板</h2></div>
 
-                <a href="javascript:void(0)" onclick="download_excel('<?php echo ($downloadUrl); ?>');" class="btn btn-primary" role="button">
-                    <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span>导出
-                </a>
-            </div>
-        </div>
-        <div class="clear"></div>
-    </div>
-    </div>
-
-    <?php if(!empty($error)): ?><div id="error" class="alert  alert-danger">
-            <a href="#" class="close" data-dismiss="alert">&times;</a>
-            <strong>失败！</strong><?php echo ($error); ?>
-        </div><?php endif; ?>
-    <?php if(!empty($success)): ?><div id="success" class="alert  alert-success">
-            <a href="#" class="close" data-dismiss="alert">&times;</a>
-            <strong>成功！</strong><?php echo ($success); ?>
-        </div><?php endif; ?>
 
     <div class="admin_list" >
-        <div class="search-bar">
-            <form class="form-inline" role="form" method="get" action="<?php echo U(ACTION_NAME);?>">
-                <div class="form-group">
-                    <label for="start_date" class="control-label">开始日期：</label>
-                    <input type="text" class="form-control" id="start_date"
-                           name="start_date"
-                           value="<?php echo ($search['start_date']); ?>"
-                           placeholder="开始日期" />
-                </div>
-                <div class="form-group">
-                    <label for="end_date" class="control-label">结束日期：</label>
-                    <input type="text" class="form-control" id="end_date"
-                           name="end_date"
-                           value="<?php echo ($search['end_date']); ?>"
-                           placeholder="结束日期" />
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">筛选</button>
-
-                </div>
-            </form>
+        <div> 选择平台：
+        <select id="select_type" autocomplete="off">
+            <option value="WEB">WEB</option>
+            <option value="WAP">WAP</option>
+            <option value="APP">APP</option>
+        </select>
+        </div>
+        <div id="visit-count" style="height:400px;">
         </div>
 
         <div class="table-responsive">
+            <h4>订单统计</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>总订单数</th>
+                    <th>总订单额</th>
+                    <th>支付单数</th>
+                    <th>支付额</th>
+                    <th>取消单数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php if(!empty($data['order'])): if(is_array($data['order'])): $i = 0; $__LIST__ = $data['order'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?><tr>
+                            <td><?php echo ($list['setting_date']); ?></td>
+                            <td><?php echo ($list['all_rows']); ?></td>
+                            <td><?php echo ($list['all_total']); ?></td>
+                            <td><?php echo ($list['pay_rows']); ?></td>
+                            <td><?php echo ($list['pay_total']); ?></td>
+                            <td><?php echo ($list['back_rows']); ?></td>
+
+                        </tr><?php endforeach; endif; else: echo "" ;endif; ?>
+                    <?php else: ?>
+                    <tr><td colspan="10" style="color:red; text-align: center;">暂时无数据</td></tr><?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive">
+            <h4>用户统计</h4>
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -146,27 +137,86 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php if(!empty($lists)): if(is_array($lists)): $i = 0; $__LIST__ = $lists;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?><tr>
-                    <td><?php echo ($list['setting_date']); ?></td>
-                    <td><?php echo ($list['all_rows']); ?></td>
-                    <td><?php echo ($list['all_rows']); ?></td>
+                <?php if(!empty($data['account'])): if(is_array($data['account'])): $i = 0; $__LIST__ = $data['account'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?><tr>
+                            <td><?php echo ($list['setting_date']); ?></td>
+                            <td><?php echo ($list['all_rows']); ?></td>
+                            <td><?php echo ($list['all_rows']); ?></td>
 
-                </tr><?php endforeach; endif; else: echo "" ;endif; ?>
-                <?php else: ?>
-                     <tr><td colspan="10" style="color:red; text-align: center;">暂时无数据</td></tr><?php endif; ?>
+                        </tr><?php endforeach; endif; else: echo "" ;endif; ?>
+                    <?php else: ?>
+                    <tr><td colspan="10" style="color:red; text-align: center;">暂时无数据</td></tr><?php endif; ?>
                 </tbody>
             </table>
         </div>
-        <?php echo ($show); ?>
+
     </div>
 
 </div>
+<script src="/Public/Admin/js/echarts.min.js"></script>
+<script type="application/javascript">
+    var visitChart = echarts.init(document.getElementById('visit-count'));
+    visitChart.showLoading();
+    $.get("<?php echo U('index/ajax_get_count_visit');?>").done(function (data) {
+        set_visit_count(data);
+    });
 
-<div id="dialog" title="">
-    <p></p>
-</div>
-<script language="javascript" type="text/javascript">
-    setDateRange($("#start_date"),$("#end_date"));
+    $("#select_type").change(function () {
+        var type = $(this).val();
+        $.get("<?php echo U('index/ajax_get_count_visit');?>/type/"+type).done(function (data) {
+            console.log(data);
+            set_visit_count(data);
+        });
+    });
+
+    function set_visit_count (data) {
+        visitChart.hideLoading();
+        var option = {};
+        option.title  = {
+            left: 'center',
+            text:'访问统计'
+        };
+        option.toolbox = {
+            show: true,
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {}
+
+            }
+        };
+        option.tooltip =  {};
+        option.legend = {
+            left: 'left',
+            data:['pv', 'uv', 'ipv']
+        };
+        option.xAxis = {
+            data: data.date
+        };
+        option.yAxis = {};
+        option.series = [
+            {
+                'name' : 'pv',
+                'type': 'line',
+                'data': data.pv
+            },
+            {
+                'name' : 'uv',
+                'type': 'line',
+                'data': data.uv
+            },
+            {
+                'name' : 'ipv',
+                'type': 'line',
+                'data': data.ipv
+            }
+        ];
+        visitChart.setOption(option);
+    }
+
 </script>
 
 </div>

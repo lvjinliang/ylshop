@@ -81,7 +81,7 @@
 <div id="main">
     <?php echo W('Common/leftMenu');?>
     <div id="main-content">
-    <div class="main-title"><h2>用户统计</h2></div>
+    <div class="main-title"><h2>订单统计</h2></div>
     <div class="main-header">
         <div class="row">
         <div class="col-sm-4">
@@ -141,15 +141,21 @@
                 <thead>
                 <tr>
                     <th>日期</th>
-                    <th>注册数</th>
-                    <th>激活数</th>
+                    <th>总订单数</th>
+                    <th>总订单额</th>
+                    <th>支付单数</th>
+                    <th>支付额</th>
+                    <th>取消单数</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php if(!empty($lists)): if(is_array($lists)): $i = 0; $__LIST__ = $lists;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?><tr>
                     <td><?php echo ($list['setting_date']); ?></td>
                     <td><?php echo ($list['all_rows']); ?></td>
-                    <td><?php echo ($list['all_rows']); ?></td>
+                    <td><?php echo ($list['all_total']); ?></td>
+                    <td><?php echo ($list['pay_rows']); ?></td>
+                    <td><?php echo ($list['pay_total']); ?></td>
+                    <td><?php echo ($list['back_rows']); ?></td>
 
                 </tr><?php endforeach; endif; else: echo "" ;endif; ?>
                 <?php else: ?>

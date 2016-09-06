@@ -69,7 +69,7 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="<?php echo U('Home/Index/index');?>" target="_blank">商城首页</a></li>
+                    <li><a href="<?php echo U('Home/index/index');?>" target="_blank">商城首页</a></li>
                     <li><a href="<?php echo U('Admin/logout/index');?>" >退出</a></li>
 
                 </ul>

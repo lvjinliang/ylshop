@@ -81,93 +81,68 @@
 <div id="main">
     <?php echo W('Common/leftMenu');?>
     <div id="main-content">
-    <div class="main-title"><h2>用户统计</h2></div>
+    <div class="main-title">
+        <h2>生成搜索词</h2>
+    </div>
     <div class="main-header">
         <div class="row">
-        <div class="col-sm-4">
-            <ol class="breadcrumb">
-                <?php if(is_array($breadcrumbs)): $i = 0; $__LIST__ = $breadcrumbs;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$breadcrumb): $mod = ($i % 2 );++$i;?><li><a href="<?php echo ($breadcrumb['href']); ?>"><?php echo ($breadcrumb['title']); ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>
-            </ol>
+            <div class="col-sm-8">
+                <ol class="breadcrumb">
+                    <?php if(is_array($breadcrumbs)): $i = 0; $__LIST__ = $breadcrumbs;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$breadcrumb): $mod = ($i % 2 );++$i;?><li><a href="<?php echo ($breadcrumb['href']); ?>"><?php echo ($breadcrumb['title']); ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>
+                </ol>
+            </div>
+            <div class="col-sm-4">
+
+            </div>
+            <div class="clear"></div>
         </div>
-        <div class="col-sm-8">
-            <div class="btn-group pull-right form-botton" role="group">
+    </div>
 
 
-                <a href="javascript:void(0)" onclick="download_excel('<?php echo ($downloadUrl); ?>');" class="btn btn-primary" role="button">
-                    <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span>导出
-                </a>
+    <div class="admin_form">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <textarea id="content" name="content" class="form-control" rows="8"></textarea>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div style="margin: 10px;"></div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input type="submit" data="<?php echo U('search/ajax_create_keys');?>" value="生成" class="btn btn-primary create">
             </div>
         </div>
         <div class="clear"></div>
     </div>
-    </div>
-
-    <?php if(!empty($error)): ?><div id="error" class="alert  alert-danger">
-            <a href="#" class="close" data-dismiss="alert">&times;</a>
-            <strong>失败！</strong><?php echo ($error); ?>
-        </div><?php endif; ?>
-    <?php if(!empty($success)): ?><div id="success" class="alert  alert-success">
-            <a href="#" class="close" data-dismiss="alert">&times;</a>
-            <strong>成功！</strong><?php echo ($success); ?>
-        </div><?php endif; ?>
-
-    <div class="admin_list" >
-        <div class="search-bar">
-            <form class="form-inline" role="form" method="get" action="<?php echo U(ACTION_NAME);?>">
-                <div class="form-group">
-                    <label for="start_date" class="control-label">开始日期：</label>
-                    <input type="text" class="form-control" id="start_date"
-                           name="start_date"
-                           value="<?php echo ($search['start_date']); ?>"
-                           placeholder="开始日期" />
-                </div>
-                <div class="form-group">
-                    <label for="end_date" class="control-label">结束日期：</label>
-                    <input type="text" class="form-control" id="end_date"
-                           name="end_date"
-                           value="<?php echo ($search['end_date']); ?>"
-                           placeholder="结束日期" />
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">筛选</button>
-
-                </div>
-            </form>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th>日期</th>
-                    <th>注册数</th>
-                    <th>激活数</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php if(!empty($lists)): if(is_array($lists)): $i = 0; $__LIST__ = $lists;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?><tr>
-                    <td><?php echo ($list['setting_date']); ?></td>
-                    <td><?php echo ($list['all_rows']); ?></td>
-                    <td><?php echo ($list['all_rows']); ?></td>
-
-                </tr><?php endforeach; endif; else: echo "" ;endif; ?>
-                <?php else: ?>
-                     <tr><td colspan="10" style="color:red; text-align: center;">暂时无数据</td></tr><?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-        <?php echo ($show); ?>
-    </div>
 
 </div>
+<script>
+    $(function(){
+         $("body").on("click", "input.create", function (){
+             var url = $(this).attr("data");
+             createKeys(url,1);
+         });
 
-<div id="dialog" title="">
-    <p></p>
-</div>
-<script language="javascript" type="text/javascript">
-    setDateRange($("#start_date"),$("#end_date"));
+    });
+
+    function createKeys(url, $key) {
+        $.ajax({
+            url : url+'/p/'+$key,
+            type : 'GET',
+            dateType : 'json',
+            success : function (json){
+                if (json.success==1) {
+                    $("#content").append(json.msg);
+                    createKeys(url,json.p);
+                } else {
+                    $("#content").append(json.msg);
+                }
+
+            }
+        });
+    }
 </script>
+
 
 </div>
 <div id="footer">

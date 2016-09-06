@@ -81,7 +81,7 @@
 <div id="main">
     <?php echo W('Common/leftMenu');?>
     <div id="main-content">
-    <div class="main-title"><h2>用户统计</h2></div>
+    <div class="main-title"><h2>支付方式</h2></div>
     <div class="main-header">
         <div class="row">
         <div class="col-sm-4">
@@ -91,10 +91,12 @@
         </div>
         <div class="col-sm-8">
             <div class="btn-group pull-right form-botton" role="group">
+                <a href="<?php echo U('payment/add');?>" class="btn btn-primary" role="button">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
+                </a>
 
-
-                <a href="javascript:void(0)" onclick="download_excel('<?php echo ($downloadUrl); ?>');" class="btn btn-primary" role="button">
-                    <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span>导出
+                <a href="javascript:void(0)" onclick="deleteSelect('<?php echo U('payment/delete');?>')" class="btn btn-primary" role="button">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"> </span>删除选中
                 </a>
             </div>
         </div>
@@ -115,18 +117,9 @@
         <div class="search-bar">
             <form class="form-inline" role="form" method="get" action="<?php echo U(ACTION_NAME);?>">
                 <div class="form-group">
-                    <label for="start_date" class="control-label">开始日期：</label>
-                    <input type="text" class="form-control" id="start_date"
-                           name="start_date"
-                           value="<?php echo ($search['start_date']); ?>"
-                           placeholder="开始日期" />
-                </div>
-                <div class="form-group">
-                    <label for="end_date" class="control-label">结束日期：</label>
-                    <input type="text" class="form-control" id="end_date"
-                           name="end_date"
-                           value="<?php echo ($search['end_date']); ?>"
-                           placeholder="结束日期" />
+                    <label for="name" class="control-label">名称：</label>
+                    <input type="text" class="form-control" id="name"
+                           name="name" value="<?php echo ($search['name']); ?>" placeholder="名称" />
                 </div>
 
                 <div class="form-group">
@@ -140,17 +133,33 @@
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th>日期</th>
-                    <th>注册数</th>
-                    <th>激活数</th>
+                    <th><input type="checkbox" name="checkall" value="1"> 全选</th>
+                    <th>ID</th>
+                    <th>名称</th>
+                    <th>code</th>
+                    <th>描述</th>
+                    <th>排序</th>
+                    <th>状态</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php if(!empty($lists)): if(is_array($lists)): $i = 0; $__LIST__ = $lists;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?><tr>
-                    <td><?php echo ($list['setting_date']); ?></td>
-                    <td><?php echo ($list['all_rows']); ?></td>
-                    <td><?php echo ($list['all_rows']); ?></td>
-
+                    <td><input name="check" type="checkbox" value="<?php echo ($list['id']); ?>"></td>
+                    <td><?php echo ($list['id']); ?></td>
+                    <td><?php echo ($list['name']); ?></td>
+                    <td><?php echo ($list['code']); ?></td>
+                    <td width="40%"><?php echo ($list['description']); ?></td>
+                    <td><?php echo ($list['sort']); ?></td>
+                    <td><?php echo statusToText($list['status']);?></td>
+                    <td>
+                        <a href="<?php echo U('payment/update', array('id'=>$list['id']));?>" class="btn btn-primary" role="button" title="编辑">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"> </span>
+                        </a>
+                        <a href="javascript:void(0);" onclick="del('<?php echo U('payment/delete');?>','<?php echo ($list['id']); ?>')"  class="btn btn-primary" role="button" title="删除">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"> </span>
+                        </a>
+                    </td>
                 </tr><?php endforeach; endif; else: echo "" ;endif; ?>
                 <?php else: ?>
                      <tr><td colspan="10" style="color:red; text-align: center;">暂时无数据</td></tr><?php endif; ?>
@@ -165,9 +174,6 @@
 <div id="dialog" title="">
     <p></p>
 </div>
-<script language="javascript" type="text/javascript">
-    setDateRange($("#start_date"),$("#end_date"));
-</script>
 
 </div>
 <div id="footer">
