@@ -110,8 +110,15 @@ class  Template {
                     }
                     $layoutFile  =  $tmplPath.$theme.C('LAYOUT_NAME').$this->config['template_suffix'];
                 } else {
-                    $layoutFile  =  THEME_PATH.C('LAYOUT_NAME').$this->config['template_suffix'];
+                    $theme = C('DEFAULT_THEME').'/';
+                    $tmplPath   =   C('VIEW_PATH'); // 模块设置独立的视图目录
+                    if(!$tmplPath){
+                        // 定义TMPL_PATH 则改变全局的视图目录到模块之外
+                        $tmplPath   =   defined('TMPL_PATH')? TMPL_PATH.MODULE_NAME.'/' : APP_PATH.MODULE_NAME.'/'.C('DEFAULT_V_LAYER').'/';
+                    }
+                    $layoutFile  =  $tmplPath.$theme.C('LAYOUT_NAME').$this->config['template_suffix'];
                 }
+
 
                 // 检查布局文件
                 if(!is_file($layoutFile)) {

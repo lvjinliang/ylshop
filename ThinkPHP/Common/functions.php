@@ -883,12 +883,13 @@ function layout($layout) {
  * @return string
  */
 function U($url='',$vars='',$suffix=true,$domain=false) {
+
     // 解析URL
     if(stripos( $url,'http') === 0){
         return $url;
     }
     $info   =  parse_url($url);
-    $url    =  !empty($info['path'])?$info['path']:ACTION_NAME;
+    $url   = $orUrl =  !empty($info['path'])?$info['path']:ACTION_NAME;
     if(isset($info['fragment'])) { // 解析锚点
         $anchor =   $info['fragment'];
         if(false !== strpos($anchor,'?')) { // 解析参数
@@ -929,6 +930,33 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
         parse_str($info['query'],$params);
         $vars = array_merge($params,$vars);
     }
+
+    //自定义路由重写
+    if(in_array(strtolower($orUrl),array('home/goods/index','goods/index'))) {
+        if(isset($vars['id']) && !empty($vars['id'])) {
+            $url = '/goods-'.$vars['id'];
+            unset($vars['id']);
+            $queryString = http_build_query($vars);
+            if(!empty($queryString)) {
+                $url .= '?'.$queryString;
+            }
+            return $url;
+        }
+
+    }
+    if(in_array(strtolower($orUrl),array('home/category/index','category/index'))) {
+        if(isset($vars['id']) && !empty($vars['id'])) {
+            $url = '/category-'.$vars['id'];
+            unset($vars['id']);
+            $queryString = http_build_query($vars);
+            if(!empty($queryString)) {
+                $url .= '?'.$queryString;
+            }
+            return $url;
+        }
+
+    }
+
     
     // URL组装
     $depr       =   C('URL_PATHINFO_DEPR');
@@ -1042,6 +1070,7 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
     if(C('URL_CASE_INSENSITIVE')) {
         $url = strtolower($url);
     }
+
 
     return $url;
 }
